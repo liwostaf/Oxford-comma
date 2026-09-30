@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Mug body -->
+  <rect x="20" y="25" width="50" height="45" rx="4" fill="none" stroke="white" stroke-width="2"/>
+  <!-- Mug handle -->
+  <path d="M 75 35 Q 90 35 90 52 Q 90 70 75 70" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <!-- Coffee inside -->
+  <rect x="22" y="27" width="46" height="41" rx="3" fill="white" opacity="0.2"/>
+</svg>
