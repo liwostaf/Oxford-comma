@@ -1,0 +1,17 @@
+{
+  "name": "oxford-comma-app",
+  "version": "1.0.0",
+  "description": "The Oxford Comma - Brandeis student café ordering app",
+  "main": "index.html",
+  "scripts": {
+    "dev": "wrangler pages dev public",
+    "build": "echo 'No build step needed'",
+    "deploy": "wrangler pages deploy public"
+  },
+  "keywords": ["cafe", "ordering", "brandeis"],
+  "author": "liwostaf",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.45.0"
+  }
+}

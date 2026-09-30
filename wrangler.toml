@@ -1,0 +1,37 @@
+name = "oxford-comma"
+type = "javascript"
+account_id = ""
+workers_dev = true
+routes = [
+  { pattern = "example.com/*", zone_name = "example.com" }
+]
+build = { command = "npm run build", cwd = "./" }
+
+[env.production]
+route = "example.com/*"
+zone_id = ""
+
+[[d1_databases]]
+binding = "DB"
+database_name = "oxford-comma-production"
+database_id = ""
+
+[[d1_databases]]
+binding = "DB"
+database_name = "oxford-comma-test"
+database_id = ""
+preview = true
+
+[env.development]
+[[d1_databases]]
+binding = "DB"
+database_name = "oxford-comma-dev"
+database_id = ""
+preview = true
+
+[triggers]
+crons = []
+
+[[migrations]]
+tag = "v1"
+new = true
