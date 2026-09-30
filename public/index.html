@@ -1,0 +1,1046 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Oxford Comma - Order Ahead</title>
+<meta name="description" content="Order ahead at The Oxford Comma, Brandeis's student-run mobile café.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Gochi+Hand&display=swap">
+<style>
+:root {
+  --navy: #1B2540;
+  --cream: #FFF6E6;
+  --white: #FFFFFF;
+  --butter: #FFD66B;
+  --matcha: #A8CC8C;
+  --blush: #F7BFB0;
+  --sky: #B9D3F2;
+  --soft: #5A6078;
+  --display: "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
+  --hand: "Gochi Hand", cursive;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --navy: #0B1020;
+    --cream: #131A2E;
+    --white: #1C2540;
+    --soft: #B4B9CC;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--navy);
+  color: var(--cream);
+  font-family: var(--display);
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* Header with logo + loyalty */
+header {
+  background: var(--navy);
+  padding: 16px;
+  border-bottom: 2px solid var(--cream);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo-img {
+  width: 50px;
+  height: auto;
+}
+
+.loyalty-btn {
+  background: var(--butter);
+  color: var(--navy);
+  border: none;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+  background: var(--navy);
+  border-bottom: 2px solid var(--cream);
+  overflow-x: auto;
+  position: sticky;
+  top: 62px;
+  z-index: 99;
+}
+
+.tab {
+  appearance: none;
+  background: transparent;
+  color: var(--cream);
+  border: 2px solid var(--cream);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.tab[aria-selected="true"] {
+  background: var(--cream);
+  color: var(--navy);
+}
+
+.tab:hover {
+  background: rgba(255, 246, 230, 0.1);
+}
+
+/* Main content */
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+section {
+  display: none;
+}
+
+section[aria-selected="true"] {
+  display: block;
+}
+
+/* Form styles */
+.step {
+  margin-bottom: 32px;
+}
+
+.step-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.step-num {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--butter);
+  color: var(--navy);
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.step-title h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  text-transform: lowercase;
+}
+
+/* Menu grid */
+.menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.drink-option {
+  position: relative;
+  display: block;
+}
+
+.drink-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.drink-card {
+  padding: 16px;
+  border: 2px solid var(--cream);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--navy);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.drink-option input:checked + .drink-card {
+  background: var(--butter);
+  border-color: var(--navy);
+  box-shadow: 0 4px 12px rgba(27, 37, 64, 0.2);
+}
+
+.drink-name {
+  font-weight: 800;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.drink-price {
+  font-weight: 700;
+  color: var(--butter);
+  font-size: 14px;
+}
+
+.drink-desc {
+  font-size: 13px;
+  color: var(--soft);
+  margin-top: 4px;
+}
+
+/* Chips (size, milk, slots) */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.chip-option {
+  position: relative;
+  display: block;
+}
+
+.chip-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.chip {
+  padding: 10px 16px;
+  border: 2px solid var(--cream);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.chip-option input:checked + .chip {
+  background: var(--navy);
+  color: var(--cream);
+  border-color: var(--cream);
+}
+
+.chip-option input:disabled + .chip {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.chip small {
+  display: block;
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+/* Input fields */
+.form-field {
+  margin-bottom: 16px;
+}
+
+.form-field label {
+  display: block;
+  font-weight: 800;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  color: var(--cream);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+  width: 100%;
+  font-family: var(--display);
+  font-size: 16px;
+  padding: 12px 14px;
+  border: 2px solid var(--cream);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--navy);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--soft);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+/* Cart bar */
+.cart-summary {
+  position: sticky;
+  bottom: 0;
+  background: var(--navy);
+  border-top: 2px solid var(--cream);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  z-index: 50;
+}
+
+.cart-what {
+  flex: 1;
+  min-width: 200px;
+}
+
+.cart-what strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.cart-what small {
+  display: block;
+  font-size: 12px;
+  color: var(--soft);
+}
+
+.cart-total {
+  font-weight: 800;
+  font-size: 24px;
+}
+
+/* Buttons */
+button.submit-btn {
+  background: var(--butter);
+  color: var(--navy);
+  border: 2px solid var(--navy);
+  border-radius: 999px;
+  padding: 12px 24px;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--display);
+}
+
+button.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 214, 107, 0.3);
+}
+
+button.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Modals */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-content {
+  background: var(--navy);
+  border: 2px solid var(--cream);
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.modal-content h3 {
+  margin: 0 0 12px 0;
+  font-size: 20px;
+}
+
+.modal-content p {
+  margin: 8px 0;
+  font-size: 14px;
+  color: var(--soft);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 10px 16px;
+  border: 2px solid var(--cream);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--cream);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.modal-actions button.primary {
+  background: var(--butter);
+  color: var(--navy);
+  border-color: var(--butter);
+}
+
+/* Confirmation ticket */
+.ticket {
+  background: var(--white);
+  color: var(--navy);
+  border: 2px solid var(--navy);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  max-width: 500px;
+  margin: 40px auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.ticket .order-num {
+  background: var(--matcha);
+  color: var(--navy);
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+.ticket h1 {
+  margin: 0 0 8px 0;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.ticket .subtitle {
+  font-family: var(--hand);
+  font-size: 18px;
+  color: var(--soft);
+  margin-bottom: 16px;
+}
+
+.ticket dl {
+  text-align: left;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+  margin: 20px 0;
+  padding-top: 16px;
+  border-top: 2px solid var(--navy);
+}
+
+.ticket dt {
+  font-weight: 700;
+  color: var(--soft);
+}
+
+.ticket dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--soft);
+}
+
+.empty-state p {
+  margin: 0;
+}
+
+/* Message box */
+.message {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.message.error {
+  background: rgba(247, 191, 176, 0.2);
+  color: var(--blush);
+  border: 1px solid var(--blush);
+}
+
+.message.success {
+  background: rgba(168, 204, 140, 0.2);
+  color: var(--matcha);
+  border: 1px solid var(--matcha);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  header {
+    padding: 12px;
+  }
+
+  .tabs {
+    top: 54px;
+  }
+
+  .step-title h2 {
+    font-size: 20px;
+  }
+
+  .menu {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-summary {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cart-summary button {
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="/logo.webp" alt="The Oxford Comma" class="logo-img">
+  <button class="loyalty-btn" id="loyaltyBtn" title="Loyalty card">♥️ Loyalty</button>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab" role="tab" id="tabHome" aria-selected="true" aria-controls="viewHome">Home</button>
+  <button class="tab" role="tab" id="tabOrder" aria-selected="false" aria-controls="viewOrder">Order</button>
+  <button class="tab" role="tab" id="tabOrders" aria-selected="false" aria-controls="viewOrders">My Orders</button>
+  <button class="tab" role="tab" id="tabSettings" aria-selected="false" aria-controls="viewSettings">Settings</button>
+  <button class="tab" role="tab" id="tabAccount" aria-selected="false" aria-controls="viewAccount">Account</button>
+</nav>
+
+<main>
+  <!-- HOME -->
+  <section id="viewHome" role="tabpanel" aria-labelledby="tabHome" aria-selected="true">
+    <h1 style="text-align: center; margin-bottom: 24px;">The Oxford Comma</h1>
+    <p style="text-align: center; font-size: 16px; color: var(--soft); max-width: 60ch; margin: 0 auto;">
+      A student-run mobile café at Brandeis. Order ahead, skip the line, pay when you grab it.
+    </p>
+    <div style="text-align: center; margin-top: 32px;">
+      <button class="submit-btn" onclick="selectTab('tabOrder')" style="padding: 14px 32px; font-size: 18px;">
+        ☕ Start Ordering
+      </button>
+    </div>
+    <div id="nextPopup" style="text-align: center; margin-top: 40px; padding: 20px; border: 2px dashed var(--cream); border-radius: 12px;">
+      <p style="margin: 0 0 8px 0; font-weight: 700;">Next pop-up</p>
+      <p id="popupInfo" style="margin: 0; font-size: 18px;">Loading...</p>
+    </div>
+  </section>
+
+  <!-- ORDER FORM -->
+  <section id="viewOrder" role="tabpanel" aria-labelledby="tabOrder">
+    <form id="orderForm" novalidate>
+      <div id="formMessage" class="message hidden"></div>
+
+      <!-- Step 1: Drink -->
+      <div class="step">
+        <div class="step-title">
+          <span class="step-num">1</span>
+          <h2>what are we sipping?</h2>
+        </div>
+        <div class="menu" id="menuContainer"></div>
+      </div>
+
+      <!-- Step 2: Size & Milk -->
+      <div class="step">
+        <div class="step-title">
+          <span class="step-num">2</span>
+          <h2>make it yours</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+          <div>
+            <label style="display: block; font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">Size</label>
+            <div class="chips" id="sizesContainer"></div>
+          </div>
+          <div>
+            <label style="display: block; font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">Milk</label>
+            <div class="chips" id="milksContainer"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Slot -->
+      <div class="step">
+        <div class="step-title">
+          <span class="step-num">3</span>
+          <h2>when are you swinging by?</h2>
+        </div>
+        <p style="font-size: 13px; color: var(--soft); margin: 0 0 12px 0;">15-minute windows, capped at 6 drinks each so yours is fresh.</p>
+        <div class="chips" id="slotsContainer"></div>
+      </div>
+
+      <!-- Step 4: Name & Email/Phone -->
+      <div class="step">
+        <div class="step-title">
+          <span class="step-num">4</span>
+          <h2>who's it for?</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+          <div class="form-field">
+            <label for="guestName">Name for the cup *</label>
+            <input type="text" id="guestName" maxlength="30" placeholder="Maya" required>
+          </div>
+          <div class="form-field">
+            <label for="contactInfo">Email or phone *</label>
+            <input type="text" id="contactInfo" placeholder="your@email.com or (555) 123-4567" required>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="specialNote">Anything else? (optional)</label>
+          <textarea id="specialNote" maxlength="120" placeholder="extra hot, half sweet, surprise me…"></textarea>
+        </div>
+      </div>
+
+      <!-- Cart & Submit -->
+      <div class="cart-summary">
+        <div class="cart-what">
+          <strong id="cartWhat">Select a drink</strong>
+          <small>Pay at pickup: card, phone or cash</small>
+        </div>
+        <div class="cart-total" id="cartTotal">$0.00</div>
+        <button type="submit" class="submit-btn">Reserve it</button>
+      </div>
+    </form>
+
+    <!-- Confirmation -->
+    <div id="confirmationTicket" class="ticket hidden">
+      <div class="order-num" id="orderCode">ORDER #</div>
+      <h1 id="ticketTitle">Your order</h1>
+      <div class="subtitle" id="ticketSubtitle">See you soon!</div>
+      <dl>
+        <dt>Pick up</dt>
+        <dd id="ticketTime">—</dd>
+        <dt>Location</dt>
+        <dd id="ticketLocation">—</dd>
+        <dt>Pay</dt>
+        <dd id="ticketPrice">$0.00</dd>
+      </dl>
+      <button class="submit-btn" onclick="orderAgain()" style="width: 100%; margin-top: 16px;">Order another</button>
+    </div>
+  </section>
+
+  <!-- MY ORDERS -->
+  <section id="viewOrders" role="tabpanel" aria-labelledby="tabOrders">
+    <div id="ordersContainer" class="empty-state">
+      <p>No orders yet. Start with the Order tab!</p>
+    </div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="viewSettings" role="tabpanel" aria-labelledby="tabSettings">
+    <div class="empty-state">
+      <p>Settings coming soon (Phase 2)</p>
+    </div>
+  </section>
+
+  <!-- ACCOUNT -->
+  <section id="viewAccount" role="tabpanel" aria-labelledby="tabAccount">
+    <div class="empty-state">
+      <p>Account login coming soon (Phase 2)</p>
+    </div>
+  </section>
+</main>
+
+<!-- "Be the first to hear" Modal -->
+<div id="signupModal" class="modal">
+  <div class="modal-content">
+    <h3>🎉 Be the first to hear!</h3>
+    <p>Create an account to get:</p>
+    <ul style="text-align: left; margin: 12px 0; padding-left: 20px; font-size: 14px;">
+      <li>Digital loyalty card</li>
+      <li>Fast reorder</li>
+      <li>Exclusive updates</li>
+    </ul>
+    <div class="modal-actions">
+      <button class="primary" id="signupBtn">Sign up</button>
+      <button id="skipSignupBtn">Skip for now</button>
+    </div>
+  </div>
+</div>
+
+<!-- "Are you sure?" Modal -->
+<div id="confirmSkipModal" class="modal">
+  <div class="modal-content">
+    <h3>Skip the account?</h3>
+    <p style="font-size: 13px;">You're missing out on:</p>
+    <ul style="text-align: left; margin: 12px 0; padding-left: 20px; font-size: 13px;">
+      <li>Digital loyalty card (8 drinks = 1 free)</li>
+      <li>Fast reorder saved items</li>
+      <li>Be the first to hear updates</li>
+    </ul>
+    <div class="modal-actions">
+      <button class="primary" id="goBackToSignup">Sign up</button>
+      <button id="continueAsGuest">Continue as guest</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========== MENU DATA ==========
+const MENU = [
+  { id: 'latte', name: 'Latte', price: 4.25, desc: 'Double shot, silky steamed milk.' },
+  { id: 'cappuccino', name: 'Cappuccino', price: 4.00, desc: 'Espresso, milk, and a thick cap of foam.' },
+  { id: 'flatwhite', name: 'Flat white', price: 4.25, desc: 'Ristretto shots, thin velvety milk.' },
+  { id: 'honeylav', name: 'Honey lavender latte', price: 5.00, desc: 'House syrup with local honey.' },
+  { id: 'matcha', name: 'Matcha latte', price: 5.00, desc: 'Ceremonial-grade matcha, whisked to order.' },
+  { id: 'coldbrew', name: 'Nitro cold brew', price: 4.00, desc: 'Slow-steeped, poured creamy on tap.' }
+];
+
+const SIZES = [
+  { id: '12oz', name: '12 oz', add: 0 },
+  { id: '16oz', name: '16 oz', add: 0.75 }
+];
+
+const MILKS = [
+  { id: 'whole', name: 'Whole', add: 0 },
+  { id: '2pct', name: '2%', add: 0 },
+  { id: 'skim', name: 'Skim', add: 0 },
+  { id: 'oat', name: 'Oat', add: 0.75 },
+  { id: 'almond', name: 'Almond', add: 0.75 },
+  { id: 'none', name: 'No milk', add: 0 }
+];
+
+const POPUP = {
+  date: '2026-10-05',
+  day: 'Mon 10/5',
+  startTime: '12:30',
+  endTime: '14:00',
+  location: 'Blue booths'
+};
+
+const SIMULATION = true;
+const SLOT_CAP = 6;
+
+// ========== STATE ==========
+let orders = [];
+let allOrders = [];
+let signupModalShown = false;
+
+// ========== HELPERS ==========
+const money = n => '$' + n.toFixed(2);
+const fmtTime = hm => {
+  let [h, m] = hm.split(':').map(Number);
+  const ap = h >= 12 ? 'pm' : 'am';
+  h = h % 12 || 12;
+  return h + ':' + String(m).padStart(2, '0') + ap;
+};
+
+function getSlots() {
+  const slots = [];
+  let [h, m] = POPUP.startTime.split(':').map(Number);
+  const [eh, em] = POPUP.endTime.split(':').map(Number);
+  while (h * 60 + m < eh * 60 + em) {
+    slots.push(String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0'));
+    m += 15;
+    if (m >= 60) { m -= 60; h++; }
+  }
+  return slots;
+}
+
+function generateOrderNumber() {
+  return Math.random().toString(36).slice(2, 6).toUpperCase();
+}
+
+function getCurrent() {
+  const drink = MENU.find(d => d.id === document.querySelector('input[name=drink]:checked')?.value);
+  const size = SIZES.find(s => s.id === document.querySelector('input[name=size]:checked')?.value);
+  const milk = MILKS.find(m => m.id === document.querySelector('input[name=milk]:checked')?.value);
+  const slot = document.querySelector('input[name=slot]:checked')?.value;
+
+  if (!drink || !size || !milk) return null;
+
+  return {
+    drink, size, milk, slot,
+    price: drink.price + size.add + milk.add
+  };
+}
+
+function updateSummary() {
+  const curr = getCurrent();
+  if (!curr) {
+    document.getElementById('cartWhat').textContent = 'Select a drink';
+    document.getElementById('cartTotal').textContent = '$0.00';
+    return;
+  }
+
+  const slotStr = curr.slot ? ` · ${fmtTime(curr.slot)}` : '';
+  document.getElementById('cartWhat').textContent =
+    `${curr.size.name} ${curr.drink.name.toLowerCase()}, ${curr.milk.name.toLowerCase()} milk${slotStr}`;
+  document.getElementById('cartTotal').textContent = money(curr.price);
+}
+
+function showMessage(text, type = 'error') {
+  const el = document.getElementById('formMessage');
+  el.textContent = text;
+  el.className = 'message ' + type;
+  el.classList.remove('hidden');
+}
+
+function hideMessage() {
+  document.getElementById('formMessage').classList.add('hidden');
+}
+
+// ========== RENDER ==========
+function renderMenu() {
+  document.getElementById('menuContainer').innerHTML = MENU.map(d =>
+    `<label class="drink-option">
+      <input type="radio" name="drink" value="${d.id}" ${d === MENU[0] ? 'checked' : ''}>
+      <div class="drink-card">
+        <div class="drink-name">${d.name}</div>
+        <div class="drink-price">${money(d.price)}</div>
+        <div class="drink-desc">${d.desc}</div>
+      </div>
+    </label>`
+  ).join('');
+}
+
+function renderSizes() {
+  document.getElementById('sizesContainer').innerHTML = SIZES.map((s, i) =>
+    `<label class="chip-option">
+      <input type="radio" name="size" value="${s.id}" ${i === 0 ? 'checked' : ''}>
+      <span class="chip">${s.name}${s.add ? ' <small>+' + money(s.add) + '</small>' : ''}</span>
+    </label>`
+  ).join('');
+}
+
+function renderMilks() {
+  document.getElementById('milksContainer').innerHTML = MILKS.map((m, i) =>
+    `<label class="chip-option">
+      <input type="radio" name="milk" value="${m.id}" ${m.id === 'oat' ? 'checked' : ''}>
+      <span class="chip">${m.name}${m.add ? ' <small>+' + money(m.add) + '</small>' : ''}</span>
+    </label>`
+  ).join('');
+}
+
+function slotCounts() {
+  const c = {};
+  allOrders.forEach(o => {
+    if (o.popupDate === POPUP.date && o.status !== 'cancelled') {
+      c[o.pickupTime] = (c[o.pickupTime] || 0) + 1;
+    }
+  });
+  return c;
+}
+
+function renderSlots() {
+  const slots = getSlots();
+  const counts = slotCounts();
+  let firstOpen = null;
+
+  document.getElementById('slotsContainer').innerHTML = slots.map(s => {
+    const left = SLOT_CAP - (counts[s] || 0);
+    const full = left <= 0;
+    if (!full && !firstOpen) firstOpen = s;
+
+    return `<label class="chip-option">
+      <input type="radio" name="slot" value="${s}" ${!full ? '' : 'disabled'}>
+      <span class="chip">${fmtTime(s)}<small>${full ? 'full' : left <= 2 ? left + ' left' : ''}</small></span>
+    </label>`;
+  }).join('');
+
+  // Select first open or current
+  const inputs = document.querySelectorAll('input[name=slot]');
+  const pick = inputs.find(i => i.value === document.querySelector('input[name=slot]:checked')?.value && !i.disabled) || inputs.find(i => i.value === firstOpen);
+  if (pick) pick.checked = true;
+
+  updateSummary();
+}
+
+function renderPopup() {
+  document.getElementById('popupInfo').textContent =
+    `${POPUP.location} · ${POPUP.day} · ${fmtTime(POPUP.startTime)}–${fmtTime(POPUP.endTime)}`;
+}
+
+// ========== TABS ==========
+function selectTab(tabId) {
+  document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', 'false'));
+  document.querySelectorAll('section').forEach(s => s.setAttribute('aria-selected', 'false'));
+
+  const tab = document.getElementById(tabId);
+  const panelId = tab.getAttribute('aria-controls');
+  tab.setAttribute('aria-selected', 'true');
+  document.getElementById(panelId).setAttribute('aria-selected', 'true');
+}
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => selectTab(tab.id));
+});
+
+// ========== FORM SUBMISSION ==========
+document.getElementById('orderForm').addEventListener('change', () => {
+  updateSummary();
+  renderSlots();
+});
+
+document.getElementById('orderForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  hideMessage();
+
+  const name = document.getElementById('guestName').value.trim();
+  const contact = document.getElementById('contactInfo').value.trim();
+  const curr = getCurrent();
+
+  if (!name) { showMessage('Add a name for the cup.'); return; }
+  if (!contact) { showMessage('Add email or phone.'); return; }
+  if (!curr.slot) { showMessage('Pick a pickup time.'); return; }
+
+  // Check if slot still available
+  if ((slotCounts()[curr.slot] || 0) >= SLOT_CAP) {
+    showMessage('That slot just filled up. Pick another.');
+    renderSlots();
+    return;
+  }
+
+  // Show signup modal if not already shown this session
+  if (!sessionStorage.getItem('signupModalShown')) {
+    sessionStorage.setItem('signupModalShown', '1');
+    document.getElementById('signupModal').classList.add('open');
+
+    // Save form data for later
+    window.pendingOrder = { name, contact, curr };
+    return;
+  }
+
+  // Otherwise complete the order
+  completeOrder(name, contact, curr);
+});
+
+function completeOrder(name, contact, curr) {
+  document.getElementById('orderForm').style.display = 'none';
+
+  const orderNum = generateOrderNumber();
+  const contactType = contact.includes('@') ? 'email' : 'phone';
+
+  // Show confirmation
+  document.getElementById('orderCode').textContent = 'ORDER #' + orderNum;
+  document.getElementById('ticketTitle').textContent = `${curr.drink.name}, reserved.`;
+  document.getElementById('ticketSubtitle').textContent = `See you at ${fmtTime(curr.slot)}, ${name}!`;
+  document.getElementById('ticketTime').textContent = `${POPUP.day}, ${fmtTime(curr.slot)}`;
+  document.getElementById('ticketLocation').textContent = POPUP.location;
+  document.getElementById('ticketPrice').textContent = money(curr.price);
+  document.getElementById('confirmationTicket').classList.remove('hidden');
+
+  // Save to localStorage for now (Phase 1)
+  const order = {
+    id: Math.random().toString(36).slice(2, 10),
+    orderNumber: orderNum,
+    guestName: name,
+    guestContact: contact,
+    contactType,
+    drink: curr.drink.name,
+    drinkId: curr.drink.id,
+    size: curr.size.name,
+    milk: curr.milk.name,
+    pickupTime: curr.slot,
+    popupDate: POPUP.date,
+    status: 'reserved',
+    totalPrice: Math.round(curr.price * 100) / 100,
+    createdAt: new Date().toISOString()
+  };
+
+  allOrders.push(order);
+  localStorage.setItem('oxford-comma-orders', JSON.stringify(allOrders));
+
+  // Notify admin board
+  window.dispatchEvent(new CustomEvent('newOrder', { detail: order }));
+}
+
+function orderAgain() {
+  document.getElementById('orderForm').style.display = 'block';
+  document.getElementById('confirmationTicket').classList.add('hidden');
+  document.getElementById('guestName').value = '';
+  document.getElementById('contactInfo').value = '';
+  document.getElementById('specialNote').value = '';
+  updateSummary();
+  renderSlots();
+}
+
+// ========== SIGNUP MODALS ==========
+document.getElementById('signupBtn').addEventListener('click', () => {
+  document.getElementById('signupModal').classList.remove('open');
+  alert('Auth coming in Phase 2!');
+});
+
+document.getElementById('skipSignupBtn').addEventListener('click', () => {
+  document.getElementById('signupModal').classList.remove('open');
+  document.getElementById('confirmSkipModal').classList.add('open');
+});
+
+document.getElementById('goBackToSignup').addEventListener('click', () => {
+  document.getElementById('confirmSkipModal').classList.remove('open');
+  document.getElementById('signupModal').classList.add('open');
+});
+
+document.getElementById('continueAsGuest').addEventListener('click', () => {
+  document.getElementById('confirmSkipModal').classList.remove('open');
+  if (window.pendingOrder) {
+    completeOrder(window.pendingOrder.name, window.pendingOrder.contact, window.pendingOrder.curr);
+  }
+});
+
+// ========== INIT ==========
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('oxford-comma-orders');
+  if (saved) allOrders = JSON.parse(saved);
+
+  renderMenu();
+  renderSizes();
+  renderMilks();
+  renderSlots();
+  renderPopup();
+  updateSummary();
+});
+</script>
+
+</body>
+</html>
