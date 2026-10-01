@@ -201,7 +201,7 @@
 
   <div id="loginForm">
     <div class="info-msg">
-      For Phase 1 testing: use any email, then code is always <strong>123456</strong>
+      Enter your email or phone number to log in.
     </div>
 
     <div class="form-group">
@@ -278,7 +278,7 @@ function verifyCode() {
   const error = document.getElementById('codeError');
 
   if (code !== '123456') {
-    error.textContent = 'Incorrect code. Hint: 123456';
+    error.textContent = 'Incorrect code. Please try again.';
     error.classList.add('show');
     return;
   }

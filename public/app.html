@@ -413,13 +413,13 @@
 const DRINKS = [
   {id: 'latte', name: 'Latte', price: 4.25},
   {id: 'cappuccino', name: 'Cappuccino', price: 4.00},
-  {id: 'flatwhite', name: 'Flat white', price: 4.25},
+  {id: 'flatwhite', name: 'Flat white', price: 4.25, sizes: ['8 oz']},
   {id: 'honeylav', name: 'Honey lavender', price: 5.00},
   {id: 'matcha', name: 'Matcha latte', price: 5.00},
   {id: 'coldbrew', name: 'Nitro cold brew', price: 4.00}
 ];
 
-const SIZES = ['12 oz', '16 oz'];
+const SIZES = ['8 oz', '12 oz', '16 oz'];
 const MILKS = ['Whole', '2%', 'Skim', 'Oat', 'Almond', 'No milk'];
 const TIMES = ['12:30pm', '12:45pm', '1:00pm', '1:15pm', '1:30pm', '1:45pm', '2:00pm'];
 
@@ -436,7 +436,7 @@ function calculatePrice() {
   let price = drink.price;
   if (selected.size === '16 oz') price += 0.75;
   if (selected.milk === 'Oat' || selected.milk === 'Almond') price += 0.75;
-  return price;
+  return price.toFixed(2);
 }
 
 function renderDrinks() {
@@ -451,14 +451,21 @@ function renderDrinks() {
 
 function selectDrink(id) {
   selected.drink = id;
+  selected.size = null;
   renderDrinks();
+  renderSizes();
 }
 
 function renderSizes() {
-  const html = SIZES.map(s => `
+  const drink = DRINKS.find(d => d.id === selected.drink);
+  const availableSizes = drink && drink.sizes ? drink.sizes : SIZES;
+  const html = availableSizes.map(s => `
     <button class="option-btn ${selected.size === s ? 'selected' : ''}" onclick="selectSize('${s}')">${s}</button>
   `).join('');
   document.getElementById('sizes').innerHTML = html;
+  if (drink && drink.sizes && !drink.sizes.includes(selected.size)) {
+    selected.size = null;
+  }
 }
 
 function selectSize(s) {

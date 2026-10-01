@@ -324,7 +324,7 @@ function verifySignup() {
   const error = document.getElementById('codeError');
 
   if (code !== '123456') {
-    error.textContent = 'Incorrect code. Hint: 123456';
+    error.textContent = 'Incorrect code. Please try again.';
     error.classList.add('show');
     return;
   }
