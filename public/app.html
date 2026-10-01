@@ -54,6 +54,30 @@
       text-align: center;
     }
 
+    .auth-button {
+      background: var(--butter);
+      color: var(--navy);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      text-transform: lowercase;
+      transition: all 0.2s;
+    }
+
+    .auth-button:hover {
+      transform: scale(1.05);
+    }
+
+    .user-status {
+      font-size: 11px;
+      color: var(--soft);
+      padding: 0 12px;
+    }
+
     main {
       max-width: 600px;
       margin: 0 auto;
@@ -336,7 +360,10 @@
 <header>
   <img src="logo.svg" alt="Oxford Comma logo" onclick="window.location.href='/'">
   <h1>Order</h1>
-  <div style="width: 40px;"></div>
+  <div id="authArea" style="display: flex; align-items: center; gap: 8px;">
+    <span class="user-status" id="userStatus">Guest</span>
+    <button class="auth-button" id="authButton" onclick="handleAuthClick()">Log in</button>
+  </div>
 </header>
 
 <main>
@@ -548,6 +575,36 @@ function renderOrders() {
   `).join('');
 }
 
+function checkAuth() {
+  const userData = JSON.parse(localStorage.getItem('userData') || 'null');
+  const userStatus = document.getElementById('userStatus');
+  const authButton = document.getElementById('authButton');
+
+  if (userData && userData.name) {
+    userStatus.textContent = userData.name;
+    authButton.textContent = 'Log out';
+  } else {
+    userStatus.textContent = 'Guest';
+    authButton.textContent = 'Log in';
+  }
+}
+
+function handleAuthClick() {
+  const userData = JSON.parse(localStorage.getItem('userData') || 'null');
+
+  if (userData && userData.name) {
+    const confirmed = confirm('Log out of your account?');
+    if (confirmed) {
+      localStorage.removeItem('userData');
+      localStorage.removeItem('sessionToken');
+      checkAuth();
+    }
+  } else {
+    window.location.href = '/auth/login.html';
+  }
+}
+
+checkAuth();
 renderDrinks();
 renderSizes();
 renderMilks();
