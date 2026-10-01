@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin - Oxford Comma</title>
+  <style>
+    :root {
+      --navy: #1B2540;
+      --cream: #FFF6E6;
+      --white: #FFFFFF;
+      --butter: #FFD66B;
+      --matcha: #A8CC8C;
+      --soft: #5A6078;
+      --ok: #2F6B45;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--navy);
+      color: var(--cream);
+      font-family: "Bricolage Grotesque", system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&display=swap');
+
+    header {
+      background: var(--navy);
+      border-bottom: 2px solid var(--cream);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: lowercase;
+    }
+
+    .logout-btn {
+      background: var(--butter);
+      color: var(--navy);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      text-transform: lowercase;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid rgba(255, 246, 230, 0.1);
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      padding: 12px 16px;
+      background: transparent;
+      color: var(--soft);
+      border: none;
+      border-bottom: 2px solid transparent;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      color: var(--cream);
+    }
+
+    .nav-btn.active {
+      color: var(--butter);
+      border-bottom-color: var(--butter);
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0 0 16px 0;
+      color: var(--butter);
+    }
+
+    .kitchen-display {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .order-card {
+      background: var(--cream);
+      color: var(--navy);
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 6px solid var(--matcha);
+      box-shadow: 0 4px 12px rgba(27, 37, 64, 0.2);
+    }
+
+    .order-card.pending {
+      border-left-color: var(--butter);
+    }
+
+    .order-card.ready {
+      border-left-color: var(--ok);
+      background: rgba(168, 204, 140, 0.1);
+    }
+
+    .order-number {
+      font-size: 28px;
+      font-weight: 800;
+      margin: 0 0 12px 0;
+      color: var(--matcha);
+    }
+
+    .order-card.pending .order-number {
+      color: #FF6B35;
+    }
+
+    .order-card.ready .order-number {
+      color: var(--ok);
+    }
+
+    .order-details {
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .order-time {
+      font-size: 12px;
+      color: var(--soft);
+      margin-bottom: 12px;
+    }
+
+    .order-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .order-action-btn {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid var(--navy);
+      border-radius: 8px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      text-transform: lowercase;
+      background: var(--cream);
+      color: var(--navy);
+      transition: all 0.2s;
+    }
+
+    .order-action-btn:hover {
+      background: var(--matcha);
+      border-color: var(--matcha);
+    }
+
+    .empty-message {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--soft);
+      font-size: 18px;
+    }
+
+    .refresh-note {
+      text-align: center;
+      color: var(--soft);
+      font-size: 12px;
+      margin-top: 20px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: rgba(255, 246, 230, 0.05);
+      padding: 16px;
+      border-radius: 12px;
+      border-left: 4px solid var(--butter);
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--soft);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--butter);
+      margin-top: 4px;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 12px;
+      }
+
+      .nav-tabs {
+        gap: 8px;
+      }
+
+      .nav-btn {
+        padding: 10px 12px;
+        font-size: 11px;
+      }
+
+      .kitchen-display {
+        grid-template-columns: 1fr;
+      }
+
+      .order-number {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Admin Dashboard</h1>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</header>
+
+<main>
+  <div class="nav-tabs">
+    <button class="nav-btn active" onclick="switchTab('kitchen')">Kitchen Display</button>
+    <button class="nav-btn" onclick="switchTab('orders')">Orders</button>
+    <button class="nav-btn" onclick="switchTab('menu')">Menu</button>
+    <button class="nav-btn" onclick="switchTab('settings')">Settings</button>
+  </div>
+
+  <div id="kitchen" class="section active">
+    <h2>Kitchen Display</h2>
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-label">Total Orders</div>
+        <div class="stat-value" id="totalOrders">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Pending</div>
+        <div class="stat-value" id="pendingOrders">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Ready</div>
+        <div class="stat-value" id="readyOrders">0</div>
+      </div>
+    </div>
+    <div class="kitchen-display" id="kitchenDisplay"></div>
+    <div class="refresh-note">Updates automatically every 3 seconds</div>
+  </div>
+
+  <div id="orders" class="section">
+    <h2>All Orders</h2>
+    <div id="ordersList"></div>
+  </div>
+
+  <div id="menu" class="section">
+    <h2>Menu Management</h2>
+    <p style="color: var(--soft);">Menu management coming soon</p>
+  </div>
+
+  <div id="settings" class="section">
+    <h2>Settings</h2>
+    <p style="color: var(--soft);">Settings coming soon</p>
+  </div>
+</main>
+
+<script>
+const ADMIN_PIN = '1234';
+let orders = [];
+
+function logout() {
+  localStorage.removeItem('adminAuth');
+  window.location.href = '/admin/?login=1';
+}
+
+function switchTab(tabName) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+  document.getElementById(tabName).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function updateKitchenDisplay() {
+  const allOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+  orders = allOrders.sort((a, b) => {
+    const timeOrder = { '12:30pm': 0, '12:45pm': 1, '1:00pm': 2, '1:15pm': 3, '1:30pm': 4, '1:45pm': 5, '2:00pm': 6 };
+    return timeOrder[a.time] - timeOrder[b.time];
+  });
+
+  const pending = orders.filter(o => o.status === 'reserved');
+  const ready = orders.filter(o => o.status === 'ready');
+
+  document.getElementById('totalOrders').textContent = orders.length;
+  document.getElementById('pendingOrders').textContent = pending.length;
+  document.getElementById('readyOrders').textContent = ready.length;
+
+  const html = orders.map(o => `
+    <div class="order-card ${o.status === 'ready' ? 'ready' : 'pending'}">
+      <div class="order-number">#${String(o.number).padStart(3, '0')}</div>
+      <div class="order-details">
+        <strong>${o.size} ${o.drink}</strong><br>
+        ${o.milk}<br>
+        <strong>${o.name}</strong>
+      </div>
+      <div class="order-time">Pickup: ${o.time}</div>
+      <div class="order-actions">
+        ${o.status === 'reserved' ? `<button class="order-action-btn" onclick="markReady(${o.id})">Mark Ready</button>` : ''}
+        <button class="order-action-btn" onclick="markComplete(${o.id})">Complete</button>
+      </div>
+    </div>
+  `).join('');
+
+  const display = document.getElementById('kitchenDisplay');
+  if (orders.length === 0) {
+    display.innerHTML = '<div class="empty-message">No orders yet</div>';
+  } else {
+    display.innerHTML = html;
+  }
+}
+
+function markReady(orderId) {
+  const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+  const order = orders.find(o => o.id === orderId);
+  if (order) {
+    order.status = 'ready';
+    localStorage.setItem('orders', JSON.stringify(orders));
+    updateKitchenDisplay();
+  }
+}
+
+function markComplete(orderId) {
+  const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+  const order = orders.find(o => o.id === orderId);
+  if (order) {
+    order.status = 'complete';
+    localStorage.setItem('orders', JSON.stringify(orders));
+    updateKitchenDisplay();
+  }
+}
+
+function checkAuth() {
+  const auth = localStorage.getItem('adminAuth');
+  if (!auth) {
+    showLoginScreen();
+  } else {
+    updateKitchenDisplay();
+    setInterval(updateKitchenDisplay, 3000);
+  }
+}
+
+function showLoginScreen() {
+  const pin = prompt('Enter admin PIN:');
+  if (pin === ADMIN_PIN) {
+    localStorage.setItem('adminAuth', 'true');
+    checkAuth();
+  } else if (pin !== null) {
+    alert('Incorrect PIN');
+    showLoginScreen();
+  }
+}
+
+checkAuth();
+</script>
+
+</body>
+</html>

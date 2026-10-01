@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order - Oxford Comma</title>
+  <style>
+    :root {
+      --navy: #1B2540;
+      --cream: #FFF6E6;
+      --white: #FFFFFF;
+      --butter: #FFD66B;
+      --matcha: #A8CC8C;
+      --soft: #5A6078;
+      --ok: #2F6B45;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--navy);
+      color: var(--cream);
+      font-family: "Bricolage Grotesque", system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&display=swap');
+
+    header {
+      background: var(--navy);
+      border-bottom: 2px solid var(--cream);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header img {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: lowercase;
+      flex: 1;
+      text-align: center;
+    }
+
+    .auth-button {
+      background: var(--butter);
+      color: var(--navy);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      text-transform: lowercase;
+      transition: all 0.2s;
+    }
+
+    .auth-button:hover {
+      transform: scale(1.05);
+    }
+
+    .user-status {
+      font-size: 11px;
+      color: var(--soft);
+      padding: 0 12px;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h2 {
+      margin: 24px 0 12px 0;
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--butter);
+    }
+
+    .drinks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .drink-btn {
+      padding: 16px 12px;
+      background: var(--cream);
+      color: var(--navy);
+      border: 2px solid var(--navy);
+      border-radius: 12px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .drink-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(27, 37, 64, 0.2);
+    }
+
+    .drink-btn:active {
+      transform: translateY(0);
+    }
+
+    .drink-btn.selected {
+      background: var(--matcha);
+      border-color: var(--matcha);
+      color: var(--navy);
+    }
+
+    .drink-name {
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .drink-price {
+      font-size: 12px;
+      color: var(--soft);
+    }
+
+    .drink-btn.selected .drink-price {
+      color: var(--navy);
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .option-btn {
+      padding: 12px;
+      background: var(--cream);
+      color: var(--navy);
+      border: 2px solid var(--navy);
+      border-radius: 8px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+      text-transform: lowercase;
+      transition: all 0.2s;
+    }
+
+    .option-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .option-btn.selected {
+      background: var(--matcha);
+      border-color: var(--matcha);
+      color: var(--navy);
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--butter);
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--cream);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--navy);
+      background: var(--cream);
+    }
+
+    .form-input::placeholder {
+      color: var(--soft);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--butter);
+      color: var(--navy);
+      border: none;
+      border-radius: 12px;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      text-transform: lowercase;
+      transition: all 0.2s;
+    }
+
+    .submit-btn:hover {
+      transform: scale(1.02);
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .orders-section {
+      margin-top: 32px;
+      padding-top: 32px;
+      border-top: 2px solid rgba(255, 246, 230, 0.1);
+    }
+
+    .order-card {
+      background: var(--cream);
+      color: var(--navy);
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      border-left: 4px solid var(--matcha);
+    }
+
+    .order-number {
+      font-weight: 800;
+      font-size: 16px;
+      margin: 0 0 8px 0;
+      color: var(--matcha);
+    }
+
+    .order-details {
+      font-size: 13px;
+      color: var(--soft);
+      margin: 0 0 8px 0;
+      line-height: 1.6;
+    }
+
+    .order-status {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: rgba(255, 214, 107, 0.3);
+      color: #8A4B0C;
+    }
+
+    .empty-message {
+      text-align: center;
+      padding: 20px;
+      color: var(--soft);
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--cream);
+      color: var(--navy);
+      padding: 24px;
+      border-radius: 16px;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    .modal h2 {
+      color: var(--butter);
+      margin-top: 0;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid var(--navy);
+      border-radius: 8px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      text-transform: lowercase;
+      background: var(--cream);
+      color: var(--navy);
+      transition: all 0.2s;
+    }
+
+    .modal-btn:hover {
+      background: var(--matcha);
+      border-color: var(--matcha);
+    }
+
+    .modal-btn.primary {
+      background: var(--butter);
+    }
+
+    .modal-btn.primary:hover {
+      background: var(--ok);
+      border-color: var(--ok);
+      color: var(--cream);
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 16px;
+      }
+
+      .drinks-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="logo.svg" alt="Oxford Comma logo" onclick="window.location.href='/'">
+  <h1>Order</h1>
+  <div id="authArea" style="display: flex; align-items: center; gap: 8px;">
+    <span class="user-status" id="userStatus">Guest</span>
+    <button class="auth-button" id="authButton" onclick="handleAuthClick()">Log in</button>
+  </div>
+</header>
+
+<main>
+  <h2>Pick a drink</h2>
+  <div class="drinks-grid" id="drinks"></div>
+
+  <h2>Size</h2>
+  <div class="options-grid" id="sizes"></div>
+
+  <h2>Milk</h2>
+  <div class="options-grid" id="milks"></div>
+
+  <h2>Pickup time</h2>
+  <div class="options-grid" id="times"></div>
+
+  <h2>Your info</h2>
+  <div class="form-group">
+    <label class="form-label">Name</label>
+    <input type="text" class="form-input" id="name" placeholder="Your name">
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">Email or phone</label>
+    <input type="text" class="form-input" id="contact" placeholder="email@example.com or +1234567890">
+  </div>
+
+  <button class="submit-btn" onclick="validateAndShowModal()">Place order</button>
+
+  <div class="orders-section">
+    <h2>Your orders</h2>
+    <div id="orders"></div>
+  </div>
+</main>
+
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <h2>Confirm order</h2>
+    <div id="orderSummary"></div>
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="closeConfirmModal()">Edit</button>
+      <button class="modal-btn primary" onclick="finalizeOrder()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const DRINKS = [
+  {id: 'latte', name: 'Latte', price: 4.25},
+  {id: 'cappuccino', name: 'Cappuccino', price: 4.00},
+  {id: 'flatwhite', name: 'Flat white', price: 4.25},
+  {id: 'honeylav', name: 'Honey lavender', price: 5.00},
+  {id: 'matcha', name: 'Matcha latte', price: 5.00},
+  {id: 'coldbrew', name: 'Nitro cold brew', price: 4.00}
+];
+
+const SIZES = ['12 oz', '16 oz'];
+const MILKS = ['Whole', '2%', 'Skim', 'Oat', 'Almond', 'No milk'];
+const TIMES = ['12:30pm', '12:45pm', '1:00pm', '1:15pm', '1:30pm', '1:45pm', '2:00pm'];
+
+let selected = {
+  drink: null,
+  size: null,
+  milk: null,
+  time: null
+};
+
+function calculatePrice() {
+  if (!selected.drink) return 0;
+  const drink = DRINKS.find(d => d.id === selected.drink);
+  let price = drink.price;
+  if (selected.size === '16 oz') price += 0.75;
+  if (selected.milk === 'Oat' || selected.milk === 'Almond') price += 0.75;
+  return price;
+}
+
+function renderDrinks() {
+  const html = DRINKS.map(d => `
+    <button class="drink-btn ${selected.drink === d.id ? 'selected' : ''}" onclick="selectDrink('${d.id}')">
+      <div class="drink-name">${d.name}</div>
+      <div class="drink-price">$${d.price.toFixed(2)}</div>
+    </button>
+  `).join('');
+  document.getElementById('drinks').innerHTML = html;
+}
+
+function selectDrink(id) {
+  selected.drink = id;
+  renderDrinks();
+}
+
+function renderSizes() {
+  const html = SIZES.map(s => `
+    <button class="option-btn ${selected.size === s ? 'selected' : ''}" onclick="selectSize('${s}')">${s}</button>
+  `).join('');
+  document.getElementById('sizes').innerHTML = html;
+}
+
+function selectSize(s) {
+  selected.size = s;
+  renderSizes();
+}
+
+function renderMilks() {
+  const html = MILKS.map(m => `
+    <button class="option-btn ${selected.milk === m ? 'selected' : ''}" onclick="selectMilk('${m}')">${m}</button>
+  `).join('');
+  document.getElementById('milks').innerHTML = html;
+}
+
+function selectMilk(m) {
+  selected.milk = m;
+  renderMilks();
+}
+
+function renderTimes() {
+  const html = TIMES.map(t => `
+    <button class="option-btn ${selected.time === t ? 'selected' : ''}" onclick="selectTime('${t}')">${t}</button>
+  `).join('');
+  document.getElementById('times').innerHTML = html;
+}
+
+function selectTime(t) {
+  selected.time = t;
+  renderTimes();
+}
+
+function validateAndShowModal() {
+  const name = document.getElementById('name').value.trim();
+  const contact = document.getElementById('contact').value.trim();
+
+  if (!selected.drink || !selected.size || !selected.milk || !selected.time || !name || !contact) {
+    alert('Please fill in all fields');
+    return;
+  }
+
+  const drink = DRINKS.find(d => d.id === selected.drink);
+  const price = calculatePrice();
+  const summary = `${selected.size} ${drink.name} with ${selected.milk}<br>Pickup: ${selected.time}<br>Price: $${price.toFixed(2)}`;
+  document.getElementById('orderSummary').innerHTML = summary;
+  document.getElementById('confirmModal').classList.add('active');
+}
+
+function closeConfirmModal() {
+  document.getElementById('confirmModal').classList.remove('active');
+}
+
+function finalizeOrder() {
+  const name = document.getElementById('name').value.trim();
+  const contact = document.getElementById('contact').value.trim();
+
+  if (!selected.drink || !selected.size || !selected.milk || !selected.time) {
+    alert('Please complete your order');
+    return;
+  }
+
+  const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+  const drink = DRINKS.find(d => d.id === selected.drink);
+
+  const order = {
+    id: Date.now(),
+    number: orders.length + 1,
+    drink: drink.name,
+    size: selected.size,
+    milk: selected.milk,
+    time: selected.time,
+    name: name,
+    contact: contact,
+    status: 'reserved',
+    price: calculatePrice(),
+    createdAt: new Date().toISOString()
+  };
+
+  orders.push(order);
+  localStorage.setItem('orders', JSON.stringify(orders));
+
+  document.getElementById('name').value = '';
+  document.getElementById('contact').value = '';
+  selected = {drink: null, size: null, milk: null, time: null};
+
+  renderDrinks();
+  renderSizes();
+  renderMilks();
+  renderTimes();
+  renderOrders();
+
+  closeConfirmModal();
+  alert('Order placed! Your order number is #' + String(order.number).padStart(3, '0'));
+}
+
+function renderOrders() {
+  const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+  const el = document.getElementById('orders');
+
+  if (orders.length === 0) {
+    el.innerHTML = '<div class="empty-message">No orders yet</div>';
+    return;
+  }
+
+  el.innerHTML = orders.map(o => `
+    <div class="order-card">
+      <p class="order-number">#${String(o.number).padStart(3, '0')}</p>
+      <p class="order-details">
+        ${o.size} ${o.drink} with ${o.milk}<br>
+        Pickup: ${o.time}<br>
+        Name: ${o.name}
+      </p>
+      <span class="order-status">${o.status}</span>
+    </div>
+  `).join('');
+}
+
+function checkAuth() {
+  const userData = JSON.parse(localStorage.getItem('userData') || 'null');
+  const userStatus = document.getElementById('userStatus');
+  const authButton = document.getElementById('authButton');
+
+  if (userData && userData.name) {
+    userStatus.textContent = userData.name;
+    authButton.textContent = 'Account';
+  } else {
+    userStatus.textContent = 'Guest';
+    authButton.textContent = 'Log in';
+  }
+}
+
+function handleAuthClick() {
+  const userData = JSON.parse(localStorage.getItem('userData') || 'null');
+
+  if (userData && userData.name) {
+    window.location.href = '/account.html';
+  } else {
+    window.location.href = '/auth/login.html';
+  }
+}
+
+checkAuth();
+renderDrinks();
+renderSizes();
+renderMilks();
+renderTimes();
+renderOrders();
+</script>
+
+</body>
+</html>

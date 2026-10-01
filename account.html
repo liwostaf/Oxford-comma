@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Account - Oxford Comma</title>
+  <style>
+    :root {
+      --navy: #1B2540;
+      --cream: #FFF6E6;
+      --white: #FFFFFF;
+      --butter: #FFD66B;
+      --matcha: #A8CC8C;
+      --soft: #5A6078;
+      --ok: #2F6B45;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--navy);
+      color: var(--cream);
+      font-family: "Bricolage Grotesque", system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&display=swap');
+
+    header {
+      background: var(--navy);
+      border-bottom: 2px solid var(--cream);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header img {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: lowercase;
+      flex: 1;
+      text-align: center;
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      color: var(--butter);
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid rgba(255, 246, 230, 0.1);
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      padding: 12px 16px;
+      background: transparent;
+      color: var(--soft);
+      border: none;
+      border-bottom: 2px solid transparent;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      color: var(--cream);
+    }
+
+    .nav-btn.active {
+      color: var(--butter);
+      border-bottom-color: var(--butter);
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0 0 16px 0;
+      color: var(--butter);
+    }
+
+    .profile-card {
+      background: rgba(255, 246, 230, 0.05);
+      border: 2px solid rgba(255, 246, 230, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .profile-field {
+      margin-bottom: 12px;
+    }
+
+    .profile-label {
+      font-size: 12px;
+      color: var(--butter);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .profile-value {
+      font-size: 14px;
+      color: var(--cream);
+    }
+
+    .loyalty-card {
+      background: linear-gradient(135deg, var(--matcha) 0%, rgba(168, 204, 140, 0.8) 100%);
+      color: var(--navy);
+      padding: 24px;
+      border-radius: 16px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .loyalty-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.9;
+      margin-bottom: 12px;
+    }
+
+    .loyalty-stamps {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .stamp {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(27, 37, 64, 0.3);
+      border: 2px solid rgba(27, 37, 64, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .stamp.filled {
+      background: rgba(27, 37, 64, 0.8);
+      border-color: rgba(27, 37, 64, 1);
+    }
+
+    .stamp-counter {
+      font-size: 24px;
+      font-weight: 800;
+      margin-top: 12px;
+    }
+
+    .order-card {
+      background: var(--cream);
+      color: var(--navy);
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      border-left: 4px solid var(--matcha);
+    }
+
+    .order-number {
+      font-weight: 800;
+      font-size: 16px;
+      margin: 0 0 8px 0;
+      color: var(--matcha);
+    }
+
+    .order-details {
+      font-size: 13px;
+      color: var(--soft);
+      margin: 0 0 8px 0;
+      line-height: 1.6;
+    }
+
+    .order-status {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: rgba(255, 214, 107, 0.3);
+      color: #8A4B0C;
+    }
+
+    .empty-message {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--soft);
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 16px;
+      background: var(--butter);
+      color: var(--navy);
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      text-transform: lowercase;
+      transition: all 0.2s;
+      margin-top: 16px;
+    }
+
+    .button:hover {
+      transform: scale(1.05);
+    }
+
+    .button.secondary {
+      background: transparent;
+      border: 2px solid var(--butter);
+      color: var(--butter);
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 16px;
+      }
+
+      .loyalty-stamps {
+        gap: 6px;
+      }
+
+      .stamp {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <button class="back-btn" onclick="window.location.href='/app.html'">Back</button>
+  <h1>Account</h1>
+  <div style="width: 40px;"></div>
+</header>
+
+<main>
+  <div class="nav-tabs">
+    <button class="nav-btn active" onclick="switchTab('profile')">Profile</button>
+    <button class="nav-btn" onclick="switchTab('loyalty')">Loyalty</button>
+    <button class="nav-btn" onclick="switchTab('orders')">Orders</button>
+    <button class="nav-btn" onclick="switchTab('settings')">Settings</button>
+  </div>
+
+  <div id="profile" class="section active">
+    <h2>Your profile</h2>
+    <div class="profile-card">
+      <div class="profile-field">
+        <span class="profile-label">Name</span>
+        <span class="profile-value" id="profileName">-</span>
+      </div>
+      <div class="profile-field">
+        <span class="profile-label">Email</span>
+        <span class="profile-value" id="profileEmail">-</span>
+      </div>
+      <div class="profile-field">
+        <span class="profile-label">Phone</span>
+        <span class="profile-value" id="profilePhone">Not set</span>
+      </div>
+      <div class="profile-field">
+        <span class="profile-label">Member since</span>
+        <span class="profile-value" id="profileJoined">-</span>
+      </div>
+    </div>
+    <button class="button secondary" onclick="logout()">Log out</button>
+  </div>
+
+  <div id="loyalty" class="section">
+    <div class="loyalty-card">
+      <div class="loyalty-title">Loyalty card</div>
+      <div class="loyalty-stamps" id="loyaltyStamps"></div>
+      <div class="stamp-counter"><span id="stampCount">0</span>/8</div>
+      <p style="margin: 16px 0 0 0; font-size: 12px; opacity: 0.9;">
+        <span id="stampMessage">8 stamps = 1 free drink</span>
+      </p>
+    </div>
+  </div>
+
+  <div id="orders" class="section">
+    <h2>Your orders</h2>
+    <div id="ordersList"></div>
+  </div>
+
+  <div id="settings" class="section">
+    <h2>Settings</h2>
+    <div class="profile-card">
+      <h2 style="margin-top: 0; font-size: 16px;">Notifications</h2>
+      <div class="profile-field">
+        <input type="checkbox" id="emailNotif" checked>
+        <label class="checkbox-label" for="emailNotif">Email notifications</label>
+      </div>
+      <div class="profile-field">
+        <input type="checkbox" id="hapticsNotif">
+        <label class="checkbox-label" for="hapticsNotif">Haptic feedback</label>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+function switchTab(tabName) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+  document.getElementById(tabName).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function formatDate(isoString) {
+  const date = new Date(isoString);
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function loadProfile() {
+  const userData = JSON.parse(localStorage.getItem('userData') || 'null');
+
+  if (!userData || !userData.name) {
+    window.location.href = '/auth/login.html';
+    return;
+  }
+
+  document.getElementById('profileName').textContent = userData.name;
+  document.getElementById('profileEmail').textContent = userData.email || '-';
+  document.getElementById('profilePhone').textContent = userData.phone || 'Not set';
+  document.getElementById('profileJoined').textContent = formatDate(userData.createdAt);
+}
+
+function loadLoyalty() {
+  const allOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+  const userData = JSON.parse(localStorage.getItem('userData') || 'null');
+
+  const userOrders = allOrders.filter(o => o.name === (userData?.name || 'Guest'));
+  const completedOrders = userOrders.filter(o => o.status === 'complete').length;
+  const stamps = Math.min(completedOrders, 8);
+
+  const stampsHTML = Array.from({ length: 8 }, (_, i) =>
+    `<div class="stamp ${i < stamps ? 'filled' : ''}">${i + 1}</div>`
+  ).join('');
+
+  document.getElementById('loyaltyStamps').innerHTML = stampsHTML;
+  document.getElementById('stampCount').textContent = stamps;
+
+  if (stamps === 8) {
+    document.getElementById('stampMessage').textContent = 'You earned a free drink!';
+  } else {
+    const remaining = 8 - stamps;
+    document.getElementById('stampMessage').textContent = `${remaining} more stamp${remaining !== 1 ? 's' : ''} for a free drink`;
+  }
+}
+
+function loadOrders() {
+  const allOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+  const userData = JSON.parse(localStorage.getItem('userData') || 'null');
+
+  const userOrders = allOrders.filter(o => o.name === (userData?.name || 'Guest'));
+
+  if (userOrders.length === 0) {
+    document.getElementById('ordersList').innerHTML = '<div class="empty-message">No orders yet</div>';
+    return;
+  }
+
+  const html = userOrders.map(o => `
+    <div class="order-card">
+      <p class="order-number">#${String(o.number).padStart(3, '0')}</p>
+      <p class="order-details">
+        ${o.size} ${o.drink} with ${o.milk}<br>
+        Pickup: ${o.time}<br>
+        Price: $${o.price.toFixed(2)}
+      </p>
+      <span class="order-status">${o.status}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('ordersList').innerHTML = html;
+}
+
+function logout() {
+  const confirmed = confirm('Log out of your account?');
+  if (confirmed) {
+    localStorage.removeItem('userData');
+    localStorage.removeItem('sessionToken');
+    window.location.href = '/app.html';
+  }
+}
+
+loadProfile();
+loadLoyalty();
+loadOrders();
+</script>
+
+</body>
+</html>
