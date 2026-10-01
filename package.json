@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "wrangler pages dev public",
     "build": "echo 'No build step needed'",
-    "deploy": "wrangler pages deploy public"
+    "deploy": "npx wrangler pages deploy public"
   },
   "keywords": ["cafe", "ordering", "brandeis"],
   "author": "liwostaf",
