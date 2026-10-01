@@ -194,9 +194,9 @@
 <body>
 
 <div class="container">
-  <div class="logo-area">
-    <img src="/logo.svg" alt="Oxford Comma">
-    <h1>Oxford Comma</h1>
+  <div class="logo-area" onclick="window.location.href='../app.html'" style="cursor: pointer;">
+    <img src="../logo.svg" alt="Oxford Comma" style="cursor: pointer;">
+    <h1 style="cursor: pointer;">Oxford Comma</h1>
   </div>
 
   <div id="loginForm">
@@ -293,7 +293,7 @@ function verifyCode() {
   localStorage.setItem('userData', JSON.stringify(userData));
   localStorage.setItem('sessionToken', 'session-' + Date.now());
 
-  window.location.href = '/app.html';
+  window.location.href = '../app.html';
 }
 
 function backToLogin() {
@@ -308,7 +308,7 @@ function backToLogin() {
 function guestCheckout() {
   localStorage.removeItem('userData');
   localStorage.removeItem('sessionToken');
-  window.location.href = '/app.html';
+  window.location.href = '../app.html';
 }
 
 document.getElementById('codeInput').addEventListener('keypress', (e) => {

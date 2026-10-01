@@ -358,7 +358,7 @@
 <body>
 
 <header>
-  <img src="logo.svg" alt="Oxford Comma logo" onclick="window.location.href='/'">
+  <img src="logo.svg" alt="Oxford Comma logo" onclick="window.location.href='index.html'" style="cursor: pointer;">
   <h1>Order</h1>
   <div id="authArea" style="display: flex; align-items: center; gap: 8px;">
     <span class="user-status" id="userStatus">Guest</span>
@@ -583,7 +583,7 @@ function showAccountPrompt(orderNumber) {
       <p style="margin: 0 0 24px 0; color: #5A6078; font-size: 18px; font-weight: bold;">${orderNumber}</p>
       <p style="margin: 0 0 32px 0; color: #5A6078;">Create an account to track your orders and earn loyalty stamps.</p>
       <div style="display: flex; gap: 12px;">
-        <button onclick="window.location.href='/auth/signup.html'" style="
+        <button onclick="window.location.href='auth/signup.html'" style="
           flex: 1;
           padding: 12px 20px;
           background: #1B2540;
@@ -652,9 +652,9 @@ function handleAuthClick() {
   const userData = JSON.parse(localStorage.getItem('userData') || 'null');
 
   if (userData && userData.name) {
-    window.location.href = '/account.html';
+    window.location.href = 'account.html';
   } else {
-    window.location.href = '/auth/login.html';
+    window.location.href = 'auth/login.html';
   }
 }
 

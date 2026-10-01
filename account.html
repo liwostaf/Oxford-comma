@@ -280,7 +280,7 @@
 <body>
 
 <header>
-  <button class="back-btn" onclick="window.location.href='/app.html'">Back</button>
+  <button class="back-btn" onclick="window.location.href='app.html'">Back</button>
   <h1>Account</h1>
   <div style="width: 40px;"></div>
 </header>
@@ -366,7 +366,7 @@ function loadProfile() {
   const userData = JSON.parse(localStorage.getItem('userData') || 'null');
 
   if (!userData || !userData.name) {
-    window.location.href = '/auth/login.html';
+    window.location.href = '../auth/login.html';
     return;
   }
 
@@ -430,7 +430,7 @@ function logout() {
   if (confirmed) {
     localStorage.removeItem('userData');
     localStorage.removeItem('sessionToken');
-    window.location.href = '/app.html';
+    window.location.href = '../app.html';
   }
 }
 

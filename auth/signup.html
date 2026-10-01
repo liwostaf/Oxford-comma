@@ -204,9 +204,9 @@
 <body>
 
 <div class="container">
-  <div class="logo-area">
-    <img src="/logo.svg" alt="Oxford Comma">
-    <h1>Oxford Comma</h1>
+  <div class="logo-area" onclick="window.location.href='../app.html'" style="cursor: pointer;">
+    <img src="../logo.svg" alt="Oxford Comma" style="cursor: pointer;">
+    <h1 style="cursor: pointer;">Oxford Comma</h1>
   </div>
 
   <div id="signupForm">
@@ -342,7 +342,7 @@ function verifySignup() {
   localStorage.setItem('sessionToken', 'session-' + Date.now());
 
   alert('Account created successfully! Welcome to Oxford Comma.');
-  window.location.href = '/app.html';
+  window.location.href = '../app.html';
 }
 
 function backToSignup() {

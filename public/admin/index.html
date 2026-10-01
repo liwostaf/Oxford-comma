@@ -259,6 +259,7 @@
 <body>
 
 <header>
+  <a href="../index.html" style="font-size: 14px; color: var(--butter); text-decoration: none; font-weight: 700; margin-right: 16px;">← Home</a>
   <h1>Admin Dashboard</h1>
   <button class="logout-btn" onclick="logout()">Logout</button>
 </header>
@@ -313,7 +314,7 @@ let orders = [];
 
 function logout() {
   localStorage.removeItem('adminAuth');
-  window.location.href = '/admin/?login=1';
+  window.location.href = 'index.html?login=1';
 }
 
 function switchTab(tabName) {
