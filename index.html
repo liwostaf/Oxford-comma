@@ -1,546 +1,856 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Oxford Comma Order Ahead</title>
-<meta name="description" content="Order ahead at The Oxford Comma, Brandeis's student-run mobile café.">
+<title>The Oxford Comma</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Gochi+Hand&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&display=swap">
 <style>
-:root{
-  --bg:#FFF6E6; --card:#FFFDF8; --ink:#1B2540; --soft:#5A6078; --line:#1B2540;
-  --butter:#FFD66B; --matcha:#A8CC8C; --blush:#F7BFB0; --sky:#B9D3F2;
-  --shadow:#1B2540; --sel-ink:#1B2540; --tint:#F5E9D2;
-  --ok:#2F6B45; --ok-bg:#D8EEDD; --warn:#8A4B0C; --warn-bg:#FFE7C2;
-  --band:#1B2540; --band-ink:#FFF6E6;
-  --display:"Bricolage Grotesque", "Avenir Next", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --hand:"Gochi Hand", "Bradley Hand", "Comic Sans MS", cursive;
-  --r:18px;
+:root {
+  --navy: #1B2540;
+  --cream: #FFF6E6;
+  --white: #FFFFFF;
+  --butter: #FFD66B;
+  --matcha: #A8CC8C;
+  --blush: #F7BFB0;
+  --sky: #B9D3F2;
+  --soft: #5A6078;
+  --display: "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    color-scheme:dark;
-    --bg:#131A2E; --card:#1C2540; --ink:#FFF3DC; --soft:#B4B9CC; --line:#FFF3DC;
-    --shadow:#FFD66B; --tint:#232D4B;
-    --ok:#9ED3AE; --ok-bg:#1F3A2B; --warn:#FFCB85; --warn-bg:#3C2D18;
-    --band:#0B1020; --band-ink:#FFF3DC;
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--navy);
+  color: var(--cream);
+  font-family: var(--display);
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* Loading Page */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.3s;
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-logo {
+  width: 80px;
+  height: 100px;
+  margin-bottom: 24px;
+}
+
+.loading-text {
+  font-size: 14px;
+  color: var(--cream);
+  opacity: 0.7;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Main Container */
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 20px;
+  justify-items: center;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
   }
 }
-:root[data-theme="dark"]{
-  color-scheme:dark;
-  --bg:#131A2E; --card:#1C2540; --ink:#FFF3DC; --soft:#B4B9CC; --line:#FFF3DC;
-  --shadow:#FFD66B; --tint:#232D4B;
-  --ok:#9ED3AE; --ok-bg:#1F3A2B; --warn:#FFCB85; --warn-bg:#3C2D18;
-  --band:#0B1020; --band-ink:#FFF3DC;
+
+/* iPhone Frame */
+.iphone-frame {
+  width: 390px;
+  height: 844px;
+  border: 12px solid var(--navy);
+  border-radius: 60px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  background: var(--navy);
+  position: relative;
 }
-*{box-sizing:border-box}
-html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font-family:var(--display);font-size:16px;line-height:1.5;font-optical-sizing:auto}
 
-/* ticker */
-.ticker{background:var(--butter);color:#1B2540;border-bottom:2px solid #1B2540;overflow:hidden;white-space:nowrap;font-weight:700;font-size:14px;letter-spacing:.02em}
-.ticker-track{display:inline-flex;gap:28px;padding-block:8px;animation:tick 32s linear infinite}
-.ticker-track span{display:inline-flex;gap:28px}
-@keyframes tick{to{transform:translateX(-50%)}}
-@media (prefers-reduced-motion:reduce){.ticker-track{animation:none}}
+/* Notch */
+.iphone-frame::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 30px;
+  background: var(--navy);
+  border-radius: 0 0 40px 40px;
+  z-index: 10;
+}
 
-/* test notice */
-.notice{background:var(--blush);color:#1B2540;border-bottom:2px solid #1B2540;padding:10px 16px;text-align:center;font-size:14px;font-weight:600;line-height:1.4}
-.notice b{display:inline-block;background:#1B2540;color:#FFD66B;border-radius:999px;padding:2px 10px;margin-right:8px;text-transform:uppercase;font-size:11px;letter-spacing:.1em;vertical-align:1px}
+/* Home Indicator */
+.iphone-frame::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 4px;
+  background: var(--cream);
+  border-radius: 2px;
+  z-index: 10;
+}
 
-/* calendar */
-.cal{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.cal a,.cal button{text-decoration:none}
-.hero .cal{margin-top:4px}
-.hero .cal .btn.small{background:transparent;color:var(--band-ink);border-color:rgba(255,246,230,.55);box-shadow:none}
-.hero .cal .btn.small:hover{background:rgba(255,246,230,.08)}
-.cal-msg{font-size:13px;color:var(--soft)}
+.iphone-screen {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--cream);
+  color: var(--navy);
+}
 
-/* hero */
-.hero{background:var(--band);color:var(--band-ink);padding-inline:16px;position:relative;overflow:hidden}
-.hero-in{max-width:880px;margin:0 auto;padding-block:40px 44px;display:grid;gap:14px;position:relative}
-.logo{margin:0;font-weight:800;font-size:clamp(44px,11vw,92px);line-height:.9;letter-spacing:-.045em;text-transform:lowercase}
-.logo .c{color:var(--butter);display:inline-block;transform:translateY(.06em) rotate(8deg)}
-.sub{margin:0;font-family:var(--hand);font-size:clamp(22px,4vw,28px);color:var(--butter);line-height:1.2}
-.lede{margin:0;max-width:46ch;color:#D9D4C7;font-size:16px}
-.sticker{justify-self:start;display:inline-grid;gap:2px;background:var(--blush);color:#1B2540;border:2px solid #1B2540;border-radius:14px;padding:10px 16px;box-shadow:4px 4px 0 var(--butter);transform:rotate(-2deg);margin-top:8px}
-.sticker .k{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.1em}
-.sticker .v{font-size:17px;font-weight:700}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#2F6B45;margin-right:6px;vertical-align:1px;box-shadow:0 0 0 3px rgba(47,107,69,.25)}
-.hero .cup{position:absolute;right:-10px;bottom:-24px;width:min(38vw,260px);opacity:.95;pointer-events:none}
-@media (max-width:620px){.hero .cup{width:150px;right:-30px;bottom:-40px;opacity:.35}}
+/* Screen Content */
+.screen-content {
+  flex: 1;
+  overflow-y: auto;
+  display: none;
+}
 
-.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:8px 40px}
+.screen-content.active {
+  display: flex;
+  flex-direction: column;
+}
 
-/* tabs */
-.tabs{display:inline-flex;gap:4px;margin-block:26px 26px;background:var(--tint);padding:4px;border-radius:999px;border:2px solid var(--line)}
-.tab{appearance:none;border:0;background:transparent;color:var(--ink);font:700 15px var(--display);padding:9px 18px;border-radius:999px;cursor:pointer}
-.tab[aria-selected="true"]{background:var(--ink);color:var(--bg)}
-.count{display:inline-block;min-width:22px;margin-left:6px;padding:0 6px;border-radius:999px;background:var(--butter);color:#1B2540;font-size:12px;line-height:20px}
-:focus-visible{outline:3px solid var(--butter);outline-offset:3px}
-.opt:focus-within .item,.opt:focus-within .chip{outline:3px solid var(--butter);outline-offset:3px}
+/* Header */
+header {
+  background: var(--navy);
+  color: var(--cream);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--cream);
+  flex-shrink: 0;
+}
 
-/* steps */
-.step{display:grid;gap:14px;margin-bottom:38px}
-.step-h{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.num{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--bg);font-weight:800;font-size:15px;flex:none}
-h2{margin:0;font-size:clamp(24px,4.4vw,32px);font-weight:800;letter-spacing:-.03em;line-height:1.1;text-transform:lowercase;text-wrap:balance}
-.aside{font-family:var(--hand);font-size:20px;color:var(--soft);transform:rotate(-2deg)}
+.logo-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-/* menu cards */
-.menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
-.opt{position:relative;display:block;cursor:pointer}
-.opt input{position:absolute;opacity:0;pointer-events:none}
-.item{display:grid;grid-template-columns:auto 1fr auto;gap:4px 12px;align-items:start;height:100%;padding:16px;border:2px solid var(--line);border-radius:var(--r);background:var(--card);box-shadow:4px 4px 0 var(--shadow);transition:transform .12s, box-shadow .12s, background .12s}
-.opt:hover .item{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--shadow)}
-.swatch{width:44px;height:44px;border-radius:14px;border:2px solid #1B2540;display:grid;place-items:center;grid-row:1/3}
-.swatch svg{width:26px;height:26px}
-.item .nm{font-weight:800;font-size:17px;letter-spacing:-.01em;line-height:1.2}
-.item .pr{font-weight:700;font-variant-numeric:tabular-nums}
-.item .ds{grid-column:2/-1;font-size:14px;color:var(--soft);line-height:1.4}
-.badge{grid-column:2/-1;justify-self:start;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;padding:3px 8px;border-radius:999px;border:1.5px solid currentColor}
-.opt input:checked + .item{background:var(--butter);color:#1B2540;transform:translate(2px,2px);box-shadow:2px 2px 0 var(--shadow)}
-.opt input:checked + .item .ds{color:#3B4260}
-.opt input:checked + .item::after{content:"✓";position:absolute;top:-10px;right:-8px;width:28px;height:28px;border-radius:50%;background:#1B2540;color:#FFD66B;display:grid;place-items:center;font-weight:800;font-size:15px}
+.logo-svg {
+  width: 40px;
+  height: 50px;
+}
 
-/* chips */
-.row2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
-.field{display:grid;gap:8px;align-content:start}
-.lbl{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--soft)}
-.chips{display:flex;flex-wrap:wrap;gap:10px}
-.chip{display:inline-flex;align-items:baseline;gap:6px;padding:9px 16px;border:2px solid var(--line);border-radius:999px;background:var(--card);font-weight:700;font-size:15px;white-space:nowrap;transition:background .12s}
-.chip small{font-weight:500;font-size:12px;opacity:.75}
-.opt:hover .chip{background:var(--tint)}
-.opt input:checked + .chip{background:var(--ink);color:var(--bg)}
-.opt input:disabled + .chip{opacity:.35;text-decoration:line-through;cursor:not-allowed}
-.slots .opt input:checked + .chip{background:var(--matcha);color:#1B2540;border-color:#1B2540}
-.hint{font-size:14px;color:var(--soft)}
+.header-title {
+  font-size: 14px;
+  font-weight: 800;
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
 
-input[type=text],textarea{font:500 16px var(--display);color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:14px;padding:12px 14px;width:100%}
-input::placeholder,textarea::placeholder{color:var(--soft);opacity:.7}
-textarea{resize:vertical;min-height:50px}
+.loyalty-btn {
+  background: var(--butter);
+  color: var(--navy);
+  border: none;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 700;
+  font-size: 11px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
 
-/* cart bar */
-.cart{position:sticky;bottom:0;z-index:5;margin-inline:-16px;padding-inline:16px;padding-block:12px calc(12px + env(safe-area-inset-bottom, 0px));background:var(--bg);border-top:2px solid var(--line)}
-.cart-in{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between}
-.cart-what{display:grid;min-width:0;flex:1 1 220px}
-.cart-what b{font-size:16px;line-height:1.3}
-.cart-what span{font-size:13px;color:var(--soft)}
-.cart-go{display:flex;align-items:center;gap:14px}
-.total{font-weight:800;font-size:24px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-.btn{appearance:none;cursor:pointer;border:2px solid #1B2540;border-radius:999px;background:var(--butter);color:#1B2540;font:800 16px var(--display);padding:13px 22px;box-shadow:3px 3px 0 var(--shadow);transition:transform .1s, box-shadow .1s}
-.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--shadow)}
-.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
-.btn:disabled{opacity:.55;cursor:wait}
-.btn.small{font-size:13px;padding:7px 12px;box-shadow:2px 2px 0 var(--shadow);background:var(--card);color:var(--ink);border-color:var(--line)}
-.msg{font-size:14px;font-weight:600;padding:10px 14px;border-radius:12px;background:var(--warn-bg);color:var(--warn);margin-bottom:10px}
-.mode{font-size:13px;color:var(--soft);margin:-10px 0 24px}
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 8px;
+  background: var(--navy);
+  border-bottom: 2px solid var(--cream);
+  overflow-x: auto;
+  flex-shrink: 0;
+}
 
-/* ticket */
-.ticket-wrap{display:grid;gap:18px;justify-items:start;padding-block:10px 30px}
-.ticket{position:relative;width:min(100%,440px);background:var(--card);border:2px solid var(--line);border-radius:22px;box-shadow:6px 6px 0 var(--shadow);padding:26px 24px 22px;display:grid;gap:12px;transform:rotate(-1deg)}
-.ticket .code{justify-self:start;font-weight:800;font-size:13px;letter-spacing:.14em;text-transform:uppercase;background:var(--matcha);color:#1B2540;border:2px solid #1B2540;border-radius:999px;padding:4px 12px}
-.ticket .big{font-size:clamp(28px,6vw,38px);font-weight:800;letter-spacing:-.035em;line-height:1.05;text-wrap:balance}
-.ticket .hand{font-family:var(--hand);font-size:22px;color:var(--soft)}
-.ticket dl{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:4px 0 0;padding-top:14px;border-top:2px dashed var(--line)}
-.ticket dt{color:var(--soft);font-size:14px}
-.ticket dd{margin:0;font-weight:700}
-@media (prefers-reduced-motion:no-preference){.ticket{animation:drop .45s cubic-bezier(.2,1.4,.4,1)}@keyframes drop{from{transform:translateY(16px) rotate(-4deg);opacity:0}to{transform:rotate(-1deg);opacity:1}}}
+.tab {
+  appearance: none;
+  background: transparent;
+  color: var(--cream);
+  border: 2px solid var(--cream);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 700;
+  font-size: 11px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  font-family: var(--display);
+}
 
-/* board */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:26px}
-.stat{padding:14px 16px;border:2px solid var(--line);border-radius:var(--r);background:var(--card)}
-.stat:nth-child(1){background:var(--butter);color:#1B2540}
-.stat:nth-child(2){background:var(--matcha);color:#1B2540}
-.stat:nth-child(3){background:var(--blush);color:#1B2540}
-.stat:nth-child(4){background:var(--sky);color:#1B2540}
-.stat .v{font-weight:800;font-size:28px;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.15;overflow-wrap:anywhere}
-.stat .k{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.75}
-.slot-h{display:flex;justify-content:space-between;align-items:baseline;margin:22px 0 10px;font-weight:800;font-size:18px;letter-spacing:-.02em}
-.slot-h span:last-child{font-size:13px;color:var(--soft);font-weight:700}
-.orders{display:grid;gap:10px}
-.ord{display:grid;grid-template-columns:auto 1fr auto;gap:2px 14px;align-items:center;padding:12px 14px;border:2px solid var(--line);border-radius:16px;background:var(--card)}
-.ord .code{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--soft)}
-.ord .who{font-weight:800;font-size:17px}
-.ord .dr{grid-column:2;font-size:14px;color:var(--soft)}
-.ord .acts{grid-column:3;grid-row:1/3;display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
-.pill{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;padding:4px 10px;border-radius:999px;background:var(--warn-bg);color:var(--warn)}
-.pill.ready{background:var(--ok-bg);color:var(--ok)}
-.pill.done{background:transparent;color:var(--soft);border:1.5px solid var(--soft)}
-.ord.is-done{opacity:.55}
-.empty{padding:34px 18px;text-align:center;border:2px dashed var(--line);border-radius:var(--r);color:var(--soft)}
-.empty .hand{display:block;font-family:var(--hand);font-size:26px;color:var(--ink);margin-bottom:4px}
-.note{font-size:14px;color:var(--soft);margin-top:26px;max-width:62ch}
-footer{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:10px 36px;font-size:14px;color:var(--soft)}
-footer b{color:var(--ink)}
-@media (max-width:560px){
-  .ord{grid-template-columns:auto 1fr}
-  .ord .acts{grid-column:1/-1;grid-row:auto;justify-content:flex-start;margin-top:6px}
-  .cart-go{width:100%;justify-content:space-between}
+.tab.active {
+  background: var(--butter);
+  color: var(--navy);
+  border-color: var(--navy);
+}
+
+/* Form Elements */
+.form-field {
+  margin-bottom: 12px;
+}
+
+.form-field label {
+  display: block;
+  font-weight: 800;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+  color: var(--navy);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid var(--navy);
+  border-radius: 8px;
+  font-family: var(--display);
+  font-size: 14px;
+  color: var(--navy);
+  background: var(--white);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--butter);
+  box-shadow: 0 0 0 3px rgba(255, 214, 107, 0.2);
+}
+
+/* Buttons */
+.btn {
+  background: var(--navy);
+  color: var(--cream);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: var(--display);
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--butter);
+  color: var(--navy);
+  border-radius: 999px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+/* Screens */
+.screen {
+  padding: 16px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.screen h2 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.screen h3 {
+  margin: 12px 0 8px 0;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+/* Cards */
+.card {
+  background: var(--white);
+  border: 2px solid var(--navy);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.card-title {
+  font-weight: 800;
+  margin: 0 0 4px 0;
+  color: var(--navy);
+}
+
+.card-desc {
+  font-size: 13px;
+  color: var(--soft);
+  margin: 0;
+}
+
+/* Chips */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.chip-option {
+  position: relative;
+}
+
+.chip-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.chip {
+  padding: 8px 12px;
+  border: 2px solid var(--navy);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.chip-option input:checked + .chip {
+  background: var(--navy);
+  color: var(--cream);
+  border-color: var(--navy);
+}
+
+.chip-option input:disabled + .chip {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mobile Hide */
+@media (max-width: 1199px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .iphone-frame:nth-child(2) {
+    display: none;
+  }
+}
+
+/* Mini devices */
+@media (max-width: 600px) {
+  .iphone-frame {
+    width: 100%;
+    max-width: 390px;
+    height: auto;
+    aspect-ratio: 390 / 844;
+    margin: 0 auto;
+  }
+}
+
+/* Scrollbar */
+.screen::-webkit-scrollbar {
+  width: 6px;
+}
+
+.screen::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.screen::-webkit-scrollbar-thumb {
+  background: var(--soft);
+  border-radius: 3px;
 }
 </style>
 </head>
 <body>
 
-<div class="notice" id="notice" role="note"><b>Test run</b>This is a class simulation, not a real event. No drinks will be made and nothing is charged.</div>
-<div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+<!-- Loading Screen -->
+<div class="loading-screen" id="loadingScreen">
+  <svg class="loading-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120">
+    <path d="M 15 20 L 15 65 Q 15 75 25 75 L 70 75 Q 80 75 80 65 L 80 20 Z" fill="none" stroke="#FFF6E6" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M 80 35 Q 95 35 95 50 Q 95 65 80 65" fill="none" stroke="#FFF6E6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 30 10 Q 32 5 30 0" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+    <path d="M 50 8 Q 52 3 50 -2" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+    <path d="M 70 10 Q 72 5 70 0" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  </svg>
+  <div class="loading-text">Loading...</div>
+</div>
 
-<header class="hero">
-  <div class="hero-in">
-    <h1 class="logo">the oxford comma<span class="c">,</span></h1>
-    <p class="sub">coffee, matcha &amp; a well-placed pause</p>
-    <p class="lede">A student-run mobile café at Brandeis. Order ahead, skip the line, pay when you grab it.</p>
-    <div class="sticker">
-      <span class="k"><span class="dot"></span>next pop-up</span>
-      <span class="v" id="popLine"></span>
+<div class="container">
+  <!-- PHONE 1: CUSTOMER VIEW -->
+  <div class="iphone-frame" id="phone1">
+    <div class="iphone-screen">
+      <header>
+        <button class="logo-btn" onclick="app.switchView('home', 1)">
+          <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120">
+            <path d="M 15 20 L 15 65 Q 15 75 25 75 L 70 75 Q 80 75 80 65 L 80 20 Z" fill="none" stroke="#FFF6E6" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M 80 35 Q 95 35 95 50 Q 95 65 80 65" fill="none" stroke="#FFF6E6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 30 10 Q 32 5 30 0" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+            <path d="M 50 8 Q 52 3 50 -2" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+            <path d="M 70 10 Q 72 5 70 0" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+          </svg>
+        </button>
+        <h1 class="header-title">oxford comma</h1>
+        <button class="loyalty-btn" onclick="app.switchView('loyalty', 1)">♥️ Loyalty</button>
+      </header>
+
+      <nav class="tabs" id="tabs1">
+        <button class="tab active" onclick="app.switchView('home', 1)">Home</button>
+        <button class="tab" onclick="app.switchView('order', 1)">Order</button>
+        <button class="tab" onclick="app.switchView('myorders', 1)">My Orders</button>
+        <button class="tab" onclick="app.switchView('settings', 1)">Settings</button>
+      </nav>
+
+      <!-- HOME -->
+      <div class="screen-content active" id="view-home-1">
+        <div class="screen">
+          <h2>what are we sipping?</h2>
+          <p style="font-size: 13px; color: var(--soft); margin: 0 0 12px 0;">coffee, matcha & a well-placed pause</p>
+          <button class="btn btn-primary" onclick="app.switchView('order', 1)" style="width: 100%; margin-bottom: 16px;">Start Ordering</button>
+
+          <div class="card">
+            <p class="card-title">🎉 Next Pop-up</p>
+            <p class="card-desc">Blue booths • Mon 10/5 • 12:30–2pm</p>
+            <button class="btn" style="width: 100%; margin-top: 8px; font-size: 12px;">Add to Calendar</button>
+          </div>
+
+          <p style="font-size: 12px; color: var(--soft); margin-top: 16px;">Demo mode: orders are saved in this browser only.</p>
+        </div>
+      </div>
+
+      <!-- ORDER -->
+      <div class="screen-content" id="view-order-1">
+        <div class="screen">
+          <h2>📍 Step 1: Drink</h2>
+          <div id="menu-1"></div>
+
+          <h2>📍 Step 2: Customize</h2>
+          <div class="form-field">
+            <label>Size</label>
+            <div class="chips" id="sizes-1"></div>
+          </div>
+          <div class="form-field">
+            <label>Milk</label>
+            <div class="chips" id="milks-1"></div>
+          </div>
+
+          <h2>📍 Step 3: Pickup Time</h2>
+          <p style="font-size: 12px; color: var(--soft); margin: 0 0 8px 0;">15-min windows, capped at 6 drinks</p>
+          <div class="chips" id="slots-1"></div>
+
+          <h2>📍 Step 4: Contact</h2>
+          <div class="form-field">
+            <label for="name-1">Name for cup *</label>
+            <input type="text" id="name-1" placeholder="Maya" maxlength="30">
+          </div>
+          <div class="form-field">
+            <label for="contact-1">Email or phone *</label>
+            <input type="text" id="contact-1" placeholder="your@email.com or (555) 123-4567">
+          </div>
+          <div class="form-field">
+            <label for="notes-1">Special note (optional)</label>
+            <textarea id="notes-1" placeholder="extra hot, half sweet..." maxlength="120" style="height: 60px;"></textarea>
+          </div>
+
+          <button class="btn btn-primary" onclick="app.submitOrder(1)" style="width: 100%;">Reserve it</button>
+        </div>
+      </div>
+
+      <!-- MY ORDERS -->
+      <div class="screen-content" id="view-myorders-1">
+        <div class="screen">
+          <h2>Your Orders</h2>
+          <div id="orders-list-1"></div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="screen-content" id="view-settings-1">
+        <div class="screen">
+          <h2>Settings</h2>
+          <div class="form-field">
+            <label>Email or Phone</label>
+            <input type="text" id="settings-contact-1" placeholder="your@email.com">
+          </div>
+          <button class="btn btn-primary" onclick="app.logout(1)" style="width: 100%;">Logout</button>
+        </div>
+      </div>
+
+      <!-- LOYALTY -->
+      <div class="screen-content" id="view-loyalty-1">
+        <div class="screen">
+          <h2>♥️ Loyalty Card</h2>
+          <div class="card" style="text-align: center; padding: 24px;">
+            <p style="font-size: 28px; margin: 0; font-weight: 800;">8</p>
+            <p class="card-desc">drinks until free</p>
+          </div>
+          <p style="font-size: 12px; color: var(--soft);">Get 1 free drink after every 8 purchases. Stamps added at pickup!</p>
+        </div>
+      </div>
     </div>
-    <div class="cal"><a class="btn small" id="popGcal" target="_blank" rel="noopener">+ google calendar</a><button class="btn small" type="button" id="popIcs">+ apple / outlook</button></div>
-    <svg class="cup" viewBox="0 0 200 220" aria-hidden="true">
-      <path d="M70 18c-10 14 10 22 0 38M100 10c-10 14 10 22 0 38M130 18c-10 14 10 22 0 38" fill="none" stroke="#FFD66B" stroke-width="6" stroke-linecap="round"/>
-      <path d="M34 70h132l-14 128a14 14 0 0 1-14 12H62a14 14 0 0 1-14-12z" fill="#FFF6E6" stroke="#FFF6E6" stroke-width="4" stroke-linejoin="round"/>
-      <rect x="26" y="60" width="148" height="18" rx="9" fill="#F7BFB0"/>
-      <path d="M48 112h104l-6 54H54z" fill="#A8CC8C"/>
-      <text x="100" y="152" text-anchor="middle" font-family="Georgia, serif" font-size="46" font-weight="700" fill="#1B2540">,</text>
-    </svg>
   </div>
-</header>
 
-<main class="wrap">
-  <nav class="tabs" role="tablist" aria-label="Views">
-    <button class="tab" role="tab" id="tabOrder" aria-selected="true" aria-controls="viewOrder">order ahead</button>
-    <button class="tab" role="tab" id="tabBoard" aria-selected="false" aria-controls="viewBoard">pickup board<span class="count" id="boardCount" hidden></span></button>
-  </nav>
-  <p class="mode" id="modeNote" hidden></p>
+  <!-- PHONE 2: STAFF/ADMIN VIEW -->
+  <div class="iphone-frame" id="phone2">
+    <div class="iphone-screen">
+      <header>
+        <button class="logo-btn" onclick="app.switchView('home', 2)">
+          <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120">
+            <path d="M 15 20 L 15 65 Q 15 75 25 75 L 70 75 Q 80 75 80 65 L 80 20 Z" fill="none" stroke="#FFF6E6" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M 80 35 Q 95 35 95 50 Q 95 65 80 65" fill="none" stroke="#FFF6E6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 30 10 Q 32 5 30 0" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+            <path d="M 50 8 Q 52 3 50 -2" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+            <path d="M 70 10 Q 72 5 70 0" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+          </svg>
+        </button>
+        <h1 class="header-title">staff</h1>
+        <button class="loyalty-btn" onclick="app.logout(2)" style="font-size: 10px;">Logout</button>
+      </header>
 
-  <!-- ORDER -->
-  <section id="viewOrder" role="tabpanel" aria-labelledby="tabOrder">
-    <form id="orderForm" novalidate>
-      <div class="step">
-        <div class="step-h"><span class="num">1</span><h2>what are we sipping?</h2><span class="aside">everything's made to order</span></div>
-        <div class="menu" id="menu"></div>
-      </div>
+      <nav class="tabs" id="tabs2">
+        <button class="tab active" onclick="app.switchView('store', 2)">Store</button>
+        <button class="tab" onclick="app.switchView('order-staff', 2)">Order</button>
+        <button class="tab" onclick="app.switchView('settings', 2)">Settings</button>
+      </nav>
 
-      <div class="step">
-        <div class="step-h"><span class="num">2</span><h2>make it yours</h2></div>
-        <div class="row2">
-          <div class="field"><span class="lbl">Size</span><div class="chips" id="sizes"></div></div>
-          <div class="field"><span class="lbl">Milk</span><div class="chips" id="milks"></div></div>
+      <!-- STORE MODE -->
+      <div class="screen-content active" id="view-store-2">
+        <div class="screen">
+          <h2>Pickup Board</h2>
+          <div class="form-field">
+            <label>
+              <input type="checkbox" id="sound-toggle-2" checked style="width: auto; margin-right: 8px;">
+              🔔 Enable sounds
+            </label>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px;">
+            <div class="card" style="text-align: center;">
+              <p style="font-size: 20px; font-weight: 800; margin: 0;">0</p>
+              <p class="card-desc">Reserved</p>
+            </div>
+            <div class="card" style="text-align: center;">
+              <p style="font-size: 20px; font-weight: 800; margin: 0;">0</p>
+              <p class="card-desc">Ready</p>
+            </div>
+          </div>
+
+          <div id="orders-board-2"></div>
         </div>
       </div>
 
-      <div class="step">
-        <div class="step-h"><span class="num">3</span><h2>when are you swinging by?</h2></div>
-        <div class="chips slots" id="slots"></div>
-        <span class="hint">We cap each 15-minute window at 6 drinks so yours is fresh, not sitting around.</span>
-      </div>
+      <!-- ORDER FOR YOURSELF -->
+      <div class="screen-content" id="view-order-staff-2">
+        <div class="screen">
+          <h3>Order for Yourself</h3>
+          <h2 style="font-size: 14px;">📍 Step 1: Drink</h2>
+          <div id="menu-2"></div>
 
-      <div class="step">
-        <div class="step-h"><span class="num">4</span><h2>who's it for?</h2></div>
-        <div class="row2">
-          <div class="field"><label class="lbl" for="name">Name for the cup</label><input type="text" id="name" maxlength="30" autocomplete="given-name" placeholder="Maya"></div>
-          <div class="field"><label class="lbl" for="note">Anything else? (optional)</label><textarea id="note" maxlength="120" rows="1" placeholder="extra hot, half sweet, surprise me…"></textarea></div>
+          <h2 style="font-size: 14px;">📍 Step 2: Customize</h2>
+          <div class="form-field">
+            <label>Size</label>
+            <div class="chips" id="sizes-2"></div>
+          </div>
+          <div class="form-field">
+            <label>Milk</label>
+            <div class="chips" id="milks-2"></div>
+          </div>
+
+          <h2 style="font-size: 14px;">📍 Step 3: Pickup Time</h2>
+          <div class="chips" id="slots-2"></div>
+
+          <button class="btn btn-primary" onclick="app.submitOrder(2)" style="width: 100%; font-size: 12px;">Reserve for Staff</button>
         </div>
       </div>
 
-      <div class="cart">
-        <div id="formMsg" class="msg" hidden></div>
-        <div class="cart-in">
-          <div class="cart-what"><b id="sumWhat"></b><span>Pay at pickup: card, phone or cash. Nothing charged online.</span></div>
-          <div class="cart-go"><span class="total" id="sumTotal"></span><button class="btn" type="submit" id="submitBtn">reserve it</button></div>
+      <!-- SETTINGS -->
+      <div class="screen-content" id="view-settings-2">
+        <div class="screen">
+          <h2>Staff Settings</h2>
+          <p style="font-size: 12px; color: var(--soft); margin-bottom: 12px;">Staff Mode • Store Access</p>
+          <button class="btn" onclick="app.logout(2)" style="width: 100%;">Logout</button>
         </div>
       </div>
-    </form>
-
-    <div id="confirm" class="ticket-wrap" hidden>
-      <div class="ticket">
-        <span class="code" id="cNo"></span>
-        <div class="big" id="cBig"></div>
-        <div class="hand" id="cHand"></div>
-        <dl>
-          <dt>Pick up</dt><dd id="cWhen"></dd>
-          <dt>Where</dt><dd id="cWhere"></dd>
-          <dt>Pay at pickup</dt><dd id="cTotal"></dd>
-        </dl>
-      </div>
-      <p class="hint">Say your name at the table. Your drink hits the bar when your window starts.</p>
-      <div class="cal"><a class="btn small" id="gcalBtn" target="_blank" rel="noopener">+ google calendar</a><button class="btn small" type="button" id="icsBtn">+ apple / outlook</button><span class="cal-msg" id="calMsg"></span></div>
-      <button class="btn small" type="button" id="againBtn">order another</button>
     </div>
-  </section>
-
-  <!-- BOARD -->
-  <section id="viewBoard" role="tabpanel" aria-labelledby="tabBoard" hidden>
-    <div class="stats">
-      <div class="stat"><div class="v" id="sOrders">0</div><div class="k">Reserved</div></div>
-      <div class="stat"><div class="v" id="sPicked">–</div><div class="k">Picked up</div></div>
-      <div class="stat"><div class="v" id="sTop">–</div><div class="k">Top drink</div></div>
-      <div class="stat"><div class="v" id="sRev">$0</div><div class="k">Expected sales</div></div>
-    </div>
-    <div id="board"></div>
-    <p class="note">For the team at the table: tap <b>ready</b> when a drink is on the bar and <b>picked up</b> when it's collected. Reserved vs. picked up shows whether pre-orders turn into real sales.</p>
-  </section>
-</main>
-
-<footer>Founded by international students at Brandeis, as a thank-you to the community that welcomed us. <b>Open 7am–10pm</b> when the trailer's out.</footer>
+  </div>
+</div>
 
 <script>
-/* ---------- editable content ---------- */
 const MENU = [
-  {id:"latte",      name:"Latte",                price:4.25, desc:"Double shot, silky steamed milk.",               badge:"fan fave", color:"#FFD66B"},
-  {id:"cappuccino", name:"Cappuccino",           price:4.00, desc:"Espresso, milk, and a thick cap of foam.",       badge:"",         color:"#F5E1C0"},
-  {id:"flatwhite",  name:"Flat white",           price:4.25, desc:"Ristretto shots, thin velvety milk.",            badge:"",         color:"#E8CBA8"},
-  {id:"honeylav",   name:"Honey lavender latte", price:5.00, desc:"House syrup with local Massachusetts honey.",    badge:"signature",color:"#CDB8E8"},
-  {id:"matcha",     name:"Matcha latte",         price:5.00, desc:"Ceremonial-grade matcha, whisked to order.",     badge:"",         color:"#A8CC8C"},
-  {id:"coldbrew",   name:"Nitro cold brew",      price:4.00, desc:"Slow-steeped, poured creamy on tap.",            badge:"iced",     color:"#B9D3F2"}
+  { id: 'latte', name: 'Latte', price: 5, desc: 'Double shot, silky steamed milk' },
+  { id: 'cappuccino', name: 'Cappuccino', price: 5, desc: 'Espresso, milk, and a thick cap of foam' },
+  { id: 'flatwhite', name: 'Flat White', price: 5, desc: 'Ristretto shots, thin velvety milk' },
+  { id: 'honey', name: 'Honey Lavender Latte', price: 5, desc: 'House syrup with local honey' },
+  { id: 'matcha', name: 'Matcha Latte', price: 5, desc: 'Ceremonial-grade matcha, whisked to order' },
+  { id: 'coldbrew', name: 'Nitro Cold Brew', price: 4, desc: 'Slow-steeped, poured creamy on tap' }
 ];
-const SIZES = [{id:"12oz",name:"12 oz",add:0},{id:"16oz",name:"16 oz",add:0.75}];
-const MILKS = [{id:"whole",name:"Whole",add:0},{id:"2pct",name:"2%",add:0},{id:"skim",name:"Skim",add:0},{id:"oat",name:"Oat",add:0.75},{id:"almond",name:"Almond",add:0.75},{id:"none",name:"No milk",add:0}];
-const POPUP = {where:"Blue booths", date:"Mon 10/5", day:"2026-10-05", start:"12:30", end:"14:00", key:"2026-10-05-bluebooths"};
-const SIMULATION = true;   // set to false for a real pop-up: hides the test banner and drops "[TEST]" from calendar events
-const SLOT_CAP = 6;
-const TICKER = ["fresh espresso, made to order","oat milk, no stress","ceremonial matcha","open 7am–10pm","student-run at Brandeis","order ahead, skip the line"];
-const SHEET_API_URL = "";  // paste your Google Apps Script Web App URL here (see apps-script/Code.gs) to save orders to Google Sheets
-const SHEET_POLL_MS = 4000;
 
-/* ---------- storage: Google Sheet (via Apps Script) when configured, else claude.ai db, else this browser ---------- */
-const LOCAL_KEY = "oxford-comma-orders";
-function makeLocalStore(){
-  let mem = [];
-  const read = () => { try{ return JSON.parse(localStorage.getItem(LOCAL_KEY) || "[]"); }catch{ return mem; } };
-  const write = list => { mem = list; try{ localStorage.setItem(LOCAL_KEY, JSON.stringify(list)); }catch{} };
-  let listeners = [];
-  const emit = () => { const l = read(); listeners.forEach(fn => fn(l)); };
-  return {
-    kind:"local",
-    newId: () => Math.random().toString(36).slice(2,10) + Date.now().toString(36),
-    subscribe(fn){ listeners.push(fn); fn(read()); },
-    async add(id, order){ write([...read(), {...order, _id:id}]); emit(); },
-    async setStatus(id, status){ write(read().map(o => o._id===id ? {...o, status} : o)); emit(); }
-  };
-}
-function makeDbStore(db){
-  return {
-    kind:"db",
-    newId: () => db.collection("orders").doc().id,
-    subscribe(fn){ db.collection("orders").onSnapshot(s => fn(s.docs.map(d => ({...d.data(), _id:d.id}))), () => {}); },
-    add: (id, order) => db.doc("orders/"+id).set(order),
-    setStatus: (id, status) => db.doc("orders/"+id).update({status})
-  };
-}
-function makeSheetStore(url){
-  let listeners = [], last = [], timer = null;
-  async function post(action, payload){
-    const res = await fetch(url, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify({action, ...payload})});
-    let data; try{ data = await res.json(); }catch{ data = {ok:false}; }
-    if(!res.ok || data.ok === false) throw new Error((data && data.error) || "request failed");
-    return data;
+const SIZES = [
+  { id: '12oz', name: '12 oz' },
+  { id: '16oz', name: '16 oz' }
+];
+
+const MILKS = [
+  { id: 'whole', name: 'Whole' },
+  { id: '2pct', name: '2%' },
+  { id: 'skim', name: 'Skim' },
+  { id: 'oat', name: 'Oat' },
+  { id: 'almond', name: 'Almond' },
+  { id: 'nomilk', name: 'No Milk' }
+];
+
+const POPUP_DATE = '2026-10-05';
+const POPUP_TIME_START = '12:30';
+const POPUP_TIME_END = '14:00';
+
+const app = {
+  state: {
+    1: { user: null, userType: null, selectedDrink: null, selectedSize: null, selectedMilk: null, selectedSlot: null },
+    2: { user: null, userType: 'staff', selectedDrink: null, selectedSize: null, selectedMilk: null, selectedSlot: null }
+  },
+
+  init() {
+    setTimeout(() => {
+      document.getElementById('loadingScreen').classList.add('hidden');
+      this.renderMenus();
+      this.renderSlots();
+      this.switchView('home', 1);
+      this.switchView('store', 2);
+    }, 800);
+  },
+
+  renderMenus() {
+    [1, 2].forEach(phone => {
+      const container = document.getElementById(`menu-${phone}`);
+      container.innerHTML = MENU.map(drink => `
+        <div class="card" style="cursor: pointer; transition: all 0.2s;" onclick="app.selectDrink('${drink.id}', ${phone})">
+          <p class="card-title">${drink.name}</p>
+          <p class="card-desc">${drink.desc}</p>
+          <p style="font-weight: 700; color: var(--butter); margin: 4px 0 0 0;">$${drink.price}.00</p>
+        </div>
+      `).join('');
+    });
+  },
+
+  renderSlots() {
+    const slots = this.generateSlots();
+    [1, 2].forEach(phone => {
+      const container = document.getElementById(`slots-${phone}`);
+      container.innerHTML = slots.map(slot => `
+        <div class="chip-option">
+          <input type="radio" name="slot-${phone}" value="${slot.time}" id="slot-${phone}-${slot.time}">
+          <label class="chip" for="slot-${phone}-${slot.time}">${slot.display} (${slot.count}/6)</label>
+        </div>
+      `).join('');
+
+      document.querySelectorAll(`input[name="slot-${phone}"]`).forEach(input => {
+        input.addEventListener('change', (e) => this.selectSlot(e.target.value, phone));
+      });
+    });
+
+    [1, 2].forEach(phone => {
+      const container = document.getElementById(`sizes-${phone}`);
+      container.innerHTML = SIZES.map(size => `
+        <div class="chip-option">
+          <input type="radio" name="size-${phone}" value="${size.id}" id="size-${phone}-${size.id}">
+          <label class="chip" for="size-${phone}-${size.id}">${size.name}</label>
+        </div>
+      `).join('');
+
+      document.querySelectorAll(`input[name="size-${phone}"]`).forEach(input => {
+        input.addEventListener('change', (e) => this.selectSize(e.target.value, phone));
+      });
+    });
+
+    [1, 2].forEach(phone => {
+      const container = document.getElementById(`milks-${phone}`);
+      container.innerHTML = MILKS.map(milk => `
+        <div class="chip-option">
+          <input type="radio" name="milk-${phone}" value="${milk.id}" id="milk-${phone}-${milk.id}">
+          <label class="chip" for="milk-${phone}-${milk.id}">${milk.name}</label>
+        </div>
+      `).join('');
+
+      document.querySelectorAll(`input[name="milk-${phone}"]`).forEach(input => {
+        input.addEventListener('change', (e) => this.selectMilk(e.target.value, phone));
+      });
+    });
+  },
+
+  generateSlots() {
+    const slots = [];
+    const [startH, startM] = POPUP_TIME_START.split(':').map(Number);
+    const [endH, endM] = POPUP_TIME_END.split(':').map(Number);
+
+    for (let h = startH; h <= endH; h++) {
+      for (let m = 0; m < 60; m += 15) {
+        if (h === endH && m > endM) break;
+        const time = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+        const display = `${h % 12 || 12}:${String(m).padStart(2, '0')}${h >= 12 ? 'pm' : 'am'}`;
+        slots.push({ time, display, count: 0 });
+      }
+    }
+    return slots;
+  },
+
+  selectDrink(drinkId, phone) {
+    this.state[phone].selectedDrink = drinkId;
+  },
+
+  selectSize(sizeId, phone) {
+    this.state[phone].selectedSize = sizeId;
+  },
+
+  selectMilk(milkId, phone) {
+    this.state[phone].selectedMilk = milkId;
+  },
+
+  selectSlot(time, phone) {
+    this.state[phone].selectedSlot = time;
+  },
+
+  submitOrder(phone) {
+    const state = this.state[phone];
+    const name = document.getElementById(`name-${phone}`)?.value || 'Staff';
+    const contact = document.getElementById(`contact-${phone}`)?.value || 'staff@example.com';
+    const notes = document.getElementById(`notes-${phone}`)?.value || '';
+
+    if (!state.selectedDrink || !state.selectedSize || !state.selectedMilk || !state.selectedSlot) {
+      alert('Please complete all selections');
+      return;
+    }
+
+    const drink = MENU.find(d => d.id === state.selectedDrink);
+    const order = {
+      id: Math.random().toString(36).substr(2, 9),
+      orderNumber: this.generateOrderNumber(),
+      popupDate: POPUP_DATE,
+      drink: drink.name,
+      price: drink.price,
+      size: SIZES.find(s => s.id === state.selectedSize).name,
+      milk: MILKS.find(m => m.id === state.selectedMilk).name,
+      pickupTime: state.selectedSlot,
+      guestName: name,
+      contact: contact,
+      notes: notes,
+      status: 'reserved',
+      createdAt: new Date().toISOString()
+    };
+
+    const orders = JSON.parse(localStorage.getItem('oxford-orders') || '[]');
+    orders.push(order);
+    localStorage.setItem('oxford-orders', JSON.stringify(orders));
+
+    alert(`Order confirmed! #${order.orderNumber}`);
+    this.refreshOrders();
+  },
+
+  generateOrderNumber() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    for (let i = 0; i < 4; i++) result += chars.charAt(Math.floor(Math.random() * chars.length));
+    return result;
+  },
+
+  refreshOrders() {
+    const orders = JSON.parse(localStorage.getItem('oxford-orders') || '[]');
+    document.getElementById('orders-list-1').innerHTML = orders.map(o => `
+      <div class="card">
+        <p class="card-title">#${o.orderNumber} • ${o.guestName}</p>
+        <p class="card-desc">${o.size} ${o.drink} • ${o.milk}</p>
+        <p class="card-desc">Pickup: ${o.pickupTime} • Status: ${o.status}</p>
+      </div>
+    `).join('');
+
+    const slotOrders = {};
+    orders.filter(o => o.popupDate === POPUP_DATE && o.status !== 'cancelled').forEach(o => {
+      slotOrders[o.pickupTime] = (slotOrders[o.pickupTime] || 0) + 1;
+    });
+
+    document.getElementById('orders-board-2').innerHTML = Object.entries(slotOrders).map(([time, count]) => `
+      <div class="card">
+        <p class="card-title">${time}</p>
+        <p class="card-desc">${count} order${count !== 1 ? 's' : ''}</p>
+      </div>
+    `).join('');
+  },
+
+  switchView(view, phone) {
+    document.querySelectorAll(`#phone${phone} .screen-content`).forEach(el => el.classList.remove('active'));
+    document.getElementById(`view-${view}-${phone}`)?.classList.add('active');
+
+    document.querySelectorAll(`#tabs${phone} .tab`).forEach(t => t.classList.remove('active'));
+    event?.target?.classList.add('active');
+
+    if (view === 'myorders' || view === 'store') {
+      this.refreshOrders();
+    }
+  },
+
+  logout(phone) {
+    this.state[phone] = { user: null, userType: phone === 2 ? 'staff' : null, selectedDrink: null, selectedSize: null, selectedMilk: null, selectedSlot: null };
+    this.switchView(phone === 1 ? 'home' : 'store', phone);
   }
-  async function poll(){
-    try{
-      const res = await fetch(url + "?popup=" + encodeURIComponent(POPUP.key));
-      const list = await res.json();
-      last = list.map(o => ({...o, _id:o.id}));
-      listeners.forEach(fn => fn(last));
-    }catch{}
-  }
-  return {
-    kind:"sheet",
-    newId: () => Math.random().toString(36).slice(2,10) + Date.now().toString(36),
-    subscribe(fn){
-      listeners.push(fn); fn(last); poll();
-      if(!timer) timer = setInterval(poll, SHEET_POLL_MS);
-    },
-    async add(id, order){ await post("add", {id, order}); await poll(); },
-    async setStatus(id, status){ await post("setStatus", {id, status}); await poll(); }
-  };
-}
-let store = null;
-let orders = [];
+};
 
-/* ---------- helpers ---------- */
-const $ = s => document.querySelector(s);
-const money = n => "$" + n.toFixed(2);
-const fmtTime = hm => { let [h,m] = hm.split(":").map(Number); const ap = h>=12?"pm":"am"; h = h%12||12; return h+":"+String(m).padStart(2,"0")+ap; };
-const esc = s => String(s??"").replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-function slotList(){
-  const out=[]; let [h,m]=POPUP.start.split(":").map(Number); const [eh,em]=POPUP.end.split(":").map(Number);
-  while(h*60+m < eh*60+em){ out.push(String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")); m+=15; if(m>=60){m-=60;h++;} }
-  return out;
-}
-const SLOTS = slotList();
-const CUP = `<svg viewBox="0 0 24 24" fill="none" stroke="#1B2540" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h12l-1.4 11a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8z"/><path d="M4 8h14"/><path d="M9 3c-.8 1 .8 2 0 3M13 3c-.8 1 .8 2 0 3"/></svg>`;
-
-/* ---------- render: order form ---------- */
-$("#ticker").innerHTML = [0,1].map(() => `<span>${TICKER.map(t=>`<span>${t}</span><span>✦</span>`).join("")}</span>`).join("");
-
-function radio(name, val, checked, inner, disabled){
-  return `<label class="opt"><input type="radio" name="${name}" value="${val}" ${checked?"checked":""} ${disabled?"disabled":""}>${inner}</label>`;
-}
-function renderChoices(){
-  $("#menu").innerHTML = MENU.map((d,i)=>radio("drink",d.id,i===0,
-    `<span class="item"><span class="swatch" style="background:${d.color}">${CUP}</span><span class="nm">${d.name}</span><span class="pr">${money(d.price)}</span><span class="ds">${d.desc}</span>${d.badge?`<span class="badge">${d.badge}</span>`:""}</span>`)).join("");
-  const addTxt = a => a ? `<small>+${money(a)}</small>` : "";
-  $("#sizes").innerHTML = SIZES.map((s,i)=>radio("size",s.id,i===0,`<span class="chip">${s.name}${addTxt(s.add)}</span>`)).join("");
-  $("#milks").innerHTML = MILKS.map((s,i)=>radio("milk",s.id,s.id==="oat",`<span class="chip">${s.name}${addTxt(s.add)}</span>`)).join("");
-  renderSlots();
-}
-function slotCounts(){ const c={}; orders.forEach(o=>{ if(o.popup===POPUP.key) c[o.slot]=(c[o.slot]||0)+1; }); return c; }
-function renderSlots(){
-  const cur = val("slot"), c = slotCounts();
-  let firstOpen = null;
-  $("#slots").innerHTML = SLOTS.map(s=>{
-    const left = SLOT_CAP-(c[s]||0), full = left<=0;
-    if(!full && !firstOpen) firstOpen = s;
-    return radio("slot",s,false,`<span class="chip">${fmtTime(s)}<small>${full?"full":left<=2?`${left} left`:""}</small></span>`,full);
-  }).join("");
-  const inputs = [...document.querySelectorAll('input[name=slot]')];
-  const pick = inputs.find(i=>i.value===cur && !i.disabled) || inputs.find(i=>i.value===firstOpen);
-  if(pick) pick.checked = true;
-  updateSummary();
-}
-function val(n){ return (document.querySelector(`input[name=${n}]:checked`)||{}).value; }
-function current(){
-  const d = MENU.find(x=>x.id===val("drink")), s = SIZES.find(x=>x.id===val("size")), m = MILKS.find(x=>x.id===val("milk"));
-  return {d,s,m,slot:val("slot"),price:d.price+s.add+m.add};
-}
-function updateSummary(){
-  const c = current();
-  $("#sumWhat").textContent = `${c.s.name} ${c.d.name.toLowerCase()}, ${c.m.id==="none"?"no milk":c.m.name.toLowerCase()+" milk"}` + (c.slot?` · ${fmtTime(c.slot)}`:"");
-  $("#sumTotal").textContent = money(c.price);
-}
-document.addEventListener("change", e=>{ if(["drink","size","milk","slot"].includes(e.target.name)) updateSummary(); });
-function showMsg(t){ const el=$("#formMsg"); el.textContent=t; el.hidden=!t; }
-
-$("#orderForm").addEventListener("submit", async e=>{
-  e.preventDefault();
-  const name = $("#name").value.trim(), c = current();
-  if(!name){ showMsg("Add a name so we know whose cup it is."); $("#name").focus(); return; }
-  if(!c.slot){ showMsg("Every pickup window is full. Come say hi at the table and order in person."); return; }
-  if(!store){ showMsg("Still loading. Give it a second and try again."); return; }
-  if((slotCounts()[c.slot]||0) >= SLOT_CAP){ renderSlots(); showMsg("That window just filled up. Pick another time."); return; }
-  showMsg(""); const btn=$("#submitBtn"); btn.disabled=true; btn.textContent="reserving…";
-  const id = store.newId();
-  const code = id.replace(/[^a-z0-9]/gi,"").slice(-4).toUpperCase();
-  const order = {code, name, drink:c.d.name, drinkId:c.d.id, size:c.s.name, milk:c.m.name, note:$("#note").value.trim(),
-    slot:c.slot, popup:POPUP.key, where:POPUP.where, price:Math.round(c.price*100)/100, status:"reserved", createdAt:new Date().toISOString()};
-  try{
-    await store.add(id, order);
-    $("#cNo").textContent = "order #" + code;
-    $("#cBig").textContent = `${c.d.name}, reserved.`;
-    $("#cHand").textContent = `see you at ${fmtTime(c.slot)}, ${name}!`;
-    $("#cWhen").textContent = `${POPUP.date}, ${fmtTime(c.slot)}`;
-    $("#cWhere").textContent = POPUP.where;
-    $("#cTotal").textContent = money(c.price);
-    lastOrder = {slot:c.slot, title:`Pick up ${c.d.name.toLowerCase()} (#${code})`, details:`Order #${code} for ${name}: ${c.s.name} ${c.d.name}, ${c.m.name} milk. Pay ${money(c.price)} at pickup.`};
-    $("#gcalBtn").href = gcalUrl(lastOrder.title, c.slot, addMin(c.slot,15), lastOrder.details); $("#calMsg").textContent = "";
-    $("#orderForm").hidden = true; $("#confirm").hidden = false;
-    $("#confirm").scrollIntoView({behavior:"smooth", block:"start"});
-  }catch(err){
-    showMsg(err && err.code==="invalid_argument" ? "Your access to this page lets you view it but not order. Ask the owner for Contributor access."
-      : err && err.code==="quota_exceeded" ? "We're fully booked online. Order at the table instead."
-      : "That didn't go through. Check your connection and try again.");
-  }finally{ btn.disabled=false; btn.textContent="reserve it"; }
-});
-$("#againBtn").addEventListener("click", ()=>{ $("#confirm").hidden=true; $("#orderForm").hidden=false; $("#note").value=""; renderSlots(); });
-
-/* ---------- tabs ---------- */
-function selectTab(which){
-  const isOrder = which==="order";
-  $("#tabOrder").setAttribute("aria-selected", isOrder); $("#tabBoard").setAttribute("aria-selected", !isOrder);
-  $("#viewOrder").hidden = !isOrder; $("#viewBoard").hidden = isOrder;
-}
-$("#tabOrder").addEventListener("click", ()=>selectTab("order"));
-$("#tabBoard").addEventListener("click", ()=>selectTab("board"));
-if(location.hash==="#board") selectTab("board");
-
-/* ---------- render: pickup board ---------- */
-function renderBoard(){
-  const list = orders.filter(o=>o.popup===POPUP.key);
-  const cnt = $("#boardCount"); cnt.textContent = list.length; cnt.hidden = !list.length;
-  const picked = list.filter(o=>o.status==="picked_up").length;
-  $("#sOrders").textContent = list.length;
-  $("#sPicked").textContent = list.length ? Math.round(picked/list.length*100)+"%" : "–";
-  const tally = {}; list.forEach(o=>tally[o.drink]=(tally[o.drink]||0)+1);
-  const top = Object.entries(tally).sort((a,b)=>b[1]-a[1])[0];
-  $("#sTop").textContent = top ? top[0] : "–";
-  $("#sTop").style.fontSize = top && top[0].length>11 ? "18px" : "";
-  $("#sRev").textContent = "$" + list.reduce((a,o)=>a+(+o.price||0),0).toFixed(2);
-  if(!list.length){
-    $("#board").innerHTML = `<div class="empty"><span class="hand">no orders yet</span>New reservations show up here as they come in.</div>`;
-    return;
-  }
-  const bySlot = {}; list.forEach(o=>(bySlot[o.slot]=bySlot[o.slot]||[]).push(o));
-  $("#board").innerHTML = SLOTS.filter(s=>bySlot[s]).map(s=>{
-    const rows = bySlot[s].sort((a,b)=>String(a.createdAt).localeCompare(String(b.createdAt))).map(o=>{
-      const pill = o.status==="ready"?'<span class="pill ready">ready</span>':o.status==="picked_up"?'<span class="pill done">picked up</span>':'<span class="pill">reserved</span>';
-      const next = o.status==="reserved"?["ready","mark ready"]:o.status==="ready"?["picked_up","picked up"]:["reserved","undo"];
-      return `<div class="ord ${o.status==="picked_up"?"is-done":""}">
-        <span class="code">#${esc(o.code)}</span><span class="who">${esc(o.name)}</span>
-        <span class="acts">${pill}<button class="btn small" data-id="${esc(o._id)}" data-to="${next[0]}">${next[1]}</button></span>
-        <span class="dr">${esc(o.size)} ${esc(o.drink)} · ${esc(o.milk)}${o.note?` · “${esc(o.note)}”`:""} · $${(+o.price).toFixed(2)}</span>
-      </div>`;
-    }).join("");
-    return `<div class="slot-h"><span>${fmtTime(s)}</span><span>${bySlot[s].length} of ${SLOT_CAP}</span></div><div class="orders">${rows}</div>`;
-  }).join("");
-}
-$("#board").addEventListener("click", async e=>{
-  const b = e.target.closest("button[data-id]"); if(!b || !store) return;
-  b.disabled = true;
-  try{ await store.setStatus(b.dataset.id, b.dataset.to); }catch{ b.disabled=false; b.textContent="try again"; }
-});
-
-/* ---------- calendar ---------- */
-const TZ = "America/New_York";
-const stamp = (day, hm) => day.replace(/-/g,"") + "T" + hm.replace(":","") + "00";
-const addMin = (hm, n) => { let [h,m]=hm.split(":").map(Number); m+=n; h+=Math.floor(m/60); m%=60; return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0"); };
-const tag = () => SIMULATION ? "[TEST] " : "";
-function gcalUrl(title, start, end, details){
-  const q = new URLSearchParams({action:"TEMPLATE", text:tag()+title, dates:stamp(POPUP.day,start)+"/"+stamp(POPUP.day,end), ctz:TZ, location:POPUP.where+", Brandeis University, Waltham, MA", details});
-  return "https://calendar.google.com/calendar/render?" + q.toString();
-}
-function icsText(title, start, end, details){
-  const now = new Date().toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"");
-  const e = t => t.replace(/[,;\\]/g, m=>"\\"+m).replace(/\n/g,"\\n");
-  return ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//The Oxford Comma//Order Ahead//EN","BEGIN:VEVENT",
-    "UID:"+Date.now()+"@theoxfordcomma","DTSTAMP:"+now,
-    "DTSTART;TZID="+TZ+":"+stamp(POPUP.day,start),"DTEND;TZID="+TZ+":"+stamp(POPUP.day,end),
-    "SUMMARY:"+e(tag()+title),"LOCATION:"+e(POPUP.where+", Brandeis University, Waltham, MA"),"DESCRIPTION:"+e(details),
-    "END:VEVENT","END:VCALENDAR"].join("\r\n");
-}
-async function saveIcs(filename, text, msgEl){
-  let dl = null;
-  if(window.claude && window.claude.use){ try{ dl = await window.claude.use("downloads"); }catch{} }
-  try{
-    if(dl){ await dl.save({filename, data:text}); return; }
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([text], {type:"text/calendar"})); a.download = filename;
-    document.body.appendChild(a); a.click(); a.remove();
-  }catch{ if(msgEl) msgEl.textContent = "Couldn't save the calendar file. Try the Google Calendar button."; }
-}
-const POP_TITLE = "The Oxford Comma pop-up";
-const POP_DETAILS = "Handcrafted espresso and matcha at the " + POPUP.where + ". Order ahead on our site.";
-$("#popLine").textContent = `${POPUP.where} · ${POPUP.date} · ${fmtTime(POPUP.start).replace(":00","").replace(fmtTime(POPUP.end).slice(-2)===fmtTime(POPUP.start).slice(-2)?/(am|pm)$/:/$^/,"")}–${fmtTime(POPUP.end).replace(":00","")}`;
-$("#popGcal").href = gcalUrl(POP_TITLE, POPUP.start, POPUP.end, POP_DETAILS);
-$("#popIcs").addEventListener("click", ()=>saveIcs("oxford-comma-popup.ics", icsText(POP_TITLE, POPUP.start, POPUP.end, POP_DETAILS)));
-let lastOrder = null;
-$("#icsBtn").addEventListener("click", ()=>{ if(lastOrder) saveIcs("oxford-comma-pickup.ics", icsText(lastOrder.title, lastOrder.slot, addMin(lastOrder.slot,15), lastOrder.details), $("#calMsg")); });
-$("#notice").hidden = !SIMULATION;
-
-/* ---------- boot ---------- */
-renderChoices(); renderBoard();
-function start(s){
-  store = s;
-  if(s.kind==="local"){ const n=$("#modeNote"); n.textContent="Demo mode: orders are saved in this browser only."; n.hidden=false; }
-  store.subscribe(list => { orders = list; renderSlots(); renderBoard(); });
-}
-(async ()=>{
-  if(SHEET_API_URL){ start(makeSheetStore(SHEET_API_URL)); return; }
-  let db = null;
-  if(window.claude && window.claude.use){ try{ db = await window.claude.use("db"); }catch{ db = null; } }
-  start(db ? makeDbStore(db) : makeLocalStore());
-})();
+app.init();
 </script>
+
 </body>
 </html>
