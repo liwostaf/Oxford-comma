@@ -5,8 +5,7 @@
   "main": "index.html",
   "scripts": {
     "dev": "wrangler pages dev public",
-    "build": "echo 'No build step needed'",
-    "deploy": "npx wrangler pages deploy public"
+    "build": "echo 'No build step needed'"
   },
   "keywords": ["cafe", "ordering", "brandeis"],
   "author": "liwostaf",
