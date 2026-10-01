@@ -2,10 +2,8 @@ name = "oxford-comma"
 pages_build_output_dir = "public"
 compatibility_date = "2026-10-01"
 
-[env.production]
-name = "oxford-comma"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "oxford-comma"
-database_id = "oxford-comma-db"
+# D1 database configuration - will be enabled in Phase 3
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "oxford-comma"
+# database_id = "oxford-comma-db"
