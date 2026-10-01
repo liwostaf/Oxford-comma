@@ -550,7 +550,66 @@ function finalizeOrder() {
   renderOrders();
 
   closeConfirmModal();
-  alert('Order placed! Your order number is #' + String(order.number).padStart(3, '0'));
+
+  const orderNumber = '#' + String(order.number).padStart(3, '0');
+  const userData = JSON.parse(localStorage.getItem('userData') || 'null');
+
+  if (!userData || !userData.name) {
+    showAccountPrompt(orderNumber);
+  } else {
+    alert('Order placed! Your order number is ' + orderNumber);
+  }
+}
+
+function showAccountPrompt(orderNumber) {
+  const modal = document.createElement('div');
+  modal.style.cssText = `
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(27, 37, 64, 0.6);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000;
+  `;
+
+  modal.innerHTML = `
+    <div style="
+      background: white;
+      padding: 40px 30px;
+      border-radius: 12px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    ">
+      <h2 style="margin: 0 0 12px 0; color: #1B2540; font-size: 24px;">Order Placed!</h2>
+      <p style="margin: 0 0 24px 0; color: #5A6078; font-size: 18px; font-weight: bold;">${orderNumber}</p>
+      <p style="margin: 0 0 32px 0; color: #5A6078;">Create an account to track your orders and earn loyalty stamps.</p>
+      <div style="display: flex; gap: 12px;">
+        <button onclick="window.location.href='/auth/signup.html'" style="
+          flex: 1;
+          padding: 12px 20px;
+          background: #1B2540;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-weight: 700;
+          cursor: pointer;
+          font-size: 14px;
+        ">Create Account</button>
+        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="
+          flex: 1;
+          padding: 12px 20px;
+          background: #E5E5E5;
+          color: #1B2540;
+          border: none;
+          border-radius: 8px;
+          font-weight: 700;
+          cursor: pointer;
+          font-size: 14px;
+        ">Later</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
 }
 
 function renderOrders() {
