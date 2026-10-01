@@ -1,855 +1,558 @@
 <!doctype html>
 <html lang="en" data-theme="light">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>The Oxford Comma</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&display=swap">
-<style>
-:root {
-  --navy: #1B2540;
-  --cream: #FFF6E6;
-  --white: #FFFFFF;
-  --butter: #FFD66B;
-  --matcha: #A8CC8C;
-  --blush: #F7BFB0;
-  --sky: #B9D3F2;
-  --soft: #5A6078;
-  --display: "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
-}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order - Oxford Comma</title>
+  <style>
+    :root {
+      --navy: #1B2540;
+      --cream: #FFF6E6;
+      --white: #FFFFFF;
+      --butter: #FFD66B;
+      --matcha: #A8CC8C;
+      --soft: #5A6078;
+      --ok: #2F6B45;
+    }
 
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  background: var(--navy);
-  color: var(--cream);
-  font-family: var(--display);
-  font-size: 16px;
-  line-height: 1.5;
-  min-height: 100vh;
-}
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--navy);
+      color: var(--cream);
+      font-family: "Bricolage Grotesque", system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
 
-/* Loading Page */
-.loading-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--navy);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  transition: opacity 0.3s;
-}
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&display=swap');
 
-.loading-screen.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
+    header {
+      background: var(--navy);
+      border-bottom: 2px solid var(--cream);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-.loading-logo {
-  width: 80px;
-  height: 100px;
-  margin-bottom: 24px;
-}
+    header img {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
 
-.loading-text {
-  font-size: 14px;
-  color: var(--cream);
-  opacity: 0.7;
-  animation: pulse 1.5s infinite;
-}
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: lowercase;
+      flex: 1;
+      text-align: center;
+    }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
+    main {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-/* Main Container */
-.container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  padding: 20px;
-  justify-items: center;
-}
+    h2 {
+      margin: 24px 0 12px 0;
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--butter);
+    }
 
-@media (min-width: 1200px) {
-  .container {
-    grid-template-columns: 1fr 1fr;
-  }
-}
+    .drinks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
 
-/* iPhone Frame */
-.iphone-frame {
-  width: 390px;
-  height: 844px;
-  border: 12px solid var(--navy);
-  border-radius: 60px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-  display: flex;
-  flex-direction: column;
-  background: var(--navy);
-  position: relative;
-}
+    .drink-btn {
+      padding: 16px 12px;
+      background: var(--cream);
+      color: var(--navy);
+      border: 2px solid var(--navy);
+      border-radius: 12px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
 
-/* Notch */
-.iphone-frame::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 180px;
-  height: 30px;
-  background: var(--navy);
-  border-radius: 0 0 40px 40px;
-  z-index: 10;
-}
+    .drink-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(27, 37, 64, 0.2);
+    }
 
-/* Home Indicator */
-.iphone-frame::after {
-  content: '';
-  position: absolute;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  height: 4px;
-  background: var(--cream);
-  border-radius: 2px;
-  z-index: 10;
-}
+    .drink-btn:active {
+      transform: translateY(0);
+    }
 
-.iphone-screen {
-  flex: 1;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  background: var(--cream);
-  color: var(--navy);
-}
+    .drink-btn.selected {
+      background: var(--matcha);
+      border-color: var(--matcha);
+      color: var(--navy);
+    }
 
-/* Screen Content */
-.screen-content {
-  flex: 1;
-  overflow-y: auto;
-  display: none;
-}
+    .drink-name {
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
 
-.screen-content.active {
-  display: flex;
-  flex-direction: column;
-}
+    .drink-price {
+      font-size: 12px;
+      color: var(--soft);
+    }
 
-/* Header */
-header {
-  background: var(--navy);
-  color: var(--cream);
-  padding: 12px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid var(--cream);
-  flex-shrink: 0;
-}
+    .drink-btn.selected .drink-price {
+      color: var(--navy);
+    }
 
-.logo-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 8px;
+      margin-bottom: 20px;
+    }
 
-.logo-svg {
-  width: 40px;
-  height: 50px;
-}
+    .option-btn {
+      padding: 12px;
+      background: var(--cream);
+      color: var(--navy);
+      border: 2px solid var(--navy);
+      border-radius: 8px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+      text-transform: lowercase;
+      transition: all 0.2s;
+    }
 
-.header-title {
-  font-size: 14px;
-  font-weight: 800;
-  margin: 0;
-  flex: 1;
-  text-align: center;
-}
+    .option-btn:hover {
+      transform: translateY(-1px);
+    }
 
-.loyalty-btn {
-  background: var(--butter);
-  color: var(--navy);
-  border: none;
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-weight: 700;
-  font-size: 11px;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  white-space: nowrap;
-}
+    .option-btn.selected {
+      background: var(--matcha);
+      border-color: var(--matcha);
+      color: var(--navy);
+    }
 
-/* Tabs */
-.tabs {
-  display: flex;
-  gap: 4px;
-  padding: 8px;
-  background: var(--navy);
-  border-bottom: 2px solid var(--cream);
-  overflow-x: auto;
-  flex-shrink: 0;
-}
+    .form-group {
+      margin-bottom: 16px;
+    }
 
-.tab {
-  appearance: none;
-  background: transparent;
-  color: var(--cream);
-  border: 2px solid var(--cream);
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-weight: 700;
-  font-size: 11px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s;
-  font-family: var(--display);
-}
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--butter);
+      margin-bottom: 6px;
+    }
 
-.tab.active {
-  background: var(--butter);
-  color: var(--navy);
-  border-color: var(--navy);
-}
+    .form-input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--cream);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--navy);
+      background: var(--cream);
+    }
 
-/* Form Elements */
-.form-field {
-  margin-bottom: 12px;
-}
+    .form-input::placeholder {
+      color: var(--soft);
+    }
 
-.form-field label {
-  display: block;
-  font-weight: 800;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 6px;
-  color: var(--navy);
-}
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--butter);
+      color: var(--navy);
+      border: none;
+      border-radius: 12px;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      text-transform: lowercase;
+      transition: all 0.2s;
+    }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-textarea,
-select {
-  width: 100%;
-  padding: 10px;
-  border: 2px solid var(--navy);
-  border-radius: 8px;
-  font-family: var(--display);
-  font-size: 14px;
-  color: var(--navy);
-  background: var(--white);
-}
+    .submit-btn:hover {
+      transform: scale(1.02);
+    }
 
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-color: var(--butter);
-  box-shadow: 0 0 0 3px rgba(255, 214, 107, 0.2);
-}
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
 
-/* Buttons */
-.btn {
-  background: var(--navy);
-  color: var(--cream);
-  border: none;
-  border-radius: 8px;
-  padding: 12px 20px;
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-  font-family: var(--display);
-  transition: all 0.2s;
-}
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
 
-.btn-primary {
-  background: var(--butter);
-  color: var(--navy);
-  border-radius: 999px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
+    .orders-section {
+      margin-top: 32px;
+      padding-top: 32px;
+      border-top: 2px solid rgba(255, 246, 230, 0.1);
+    }
 
-.btn:hover {
-  opacity: 0.9;
-  transform: scale(1.02);
-}
+    .order-card {
+      background: var(--cream);
+      color: var(--navy);
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      border-left: 4px solid var(--matcha);
+    }
 
-/* Screens */
-.screen {
-  padding: 16px;
-  flex: 1;
-  overflow-y: auto;
-}
+    .order-number {
+      font-weight: 800;
+      font-size: 16px;
+      margin: 0 0 8px 0;
+      color: var(--matcha);
+    }
 
-.screen h2 {
-  margin: 0 0 12px 0;
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--navy);
-}
+    .order-details {
+      font-size: 13px;
+      color: var(--soft);
+      margin: 0 0 8px 0;
+      line-height: 1.6;
+    }
 
-.screen h3 {
-  margin: 12px 0 8px 0;
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--navy);
-}
+    .order-status {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: rgba(255, 214, 107, 0.3);
+      color: #8A4B0C;
+    }
 
-/* Cards */
-.card {
-  background: var(--white);
-  border: 2px solid var(--navy);
-  border-radius: 12px;
-  padding: 12px;
-  margin-bottom: 12px;
-}
+    .empty-message {
+      text-align: center;
+      padding: 20px;
+      color: var(--soft);
+    }
 
-.card-title {
-  font-weight: 800;
-  margin: 0 0 4px 0;
-  color: var(--navy);
-}
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
 
-.card-desc {
-  font-size: 13px;
-  color: var(--soft);
-  margin: 0;
-}
+    .modal-overlay.active {
+      display: flex;
+    }
 
-/* Chips */
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
-}
+    .modal {
+      background: var(--cream);
+      color: var(--navy);
+      padding: 24px;
+      border-radius: 16px;
+      max-width: 400px;
+      width: 90%;
+    }
 
-.chip-option {
-  position: relative;
-}
+    .modal h2 {
+      color: var(--butter);
+      margin-top: 0;
+    }
 
-.chip-option input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
 
-.chip {
-  padding: 8px 12px;
-  border: 2px solid var(--navy);
-  border-radius: 999px;
-  background: var(--white);
-  color: var(--navy);
-  font-weight: 700;
-  font-size: 12px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s;
-}
+    .modal-btn {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid var(--navy);
+      border-radius: 8px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      text-transform: lowercase;
+      background: var(--cream);
+      color: var(--navy);
+      transition: all 0.2s;
+    }
 
-.chip-option input:checked + .chip {
-  background: var(--navy);
-  color: var(--cream);
-  border-color: var(--navy);
-}
+    .modal-btn:hover {
+      background: var(--matcha);
+      border-color: var(--matcha);
+    }
 
-.chip-option input:disabled + .chip {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+    .modal-btn.primary {
+      background: var(--butter);
+    }
 
-/* Mobile Hide */
-@media (max-width: 1199px) {
-  .container {
-    grid-template-columns: 1fr;
-  }
+    .modal-btn.primary:hover {
+      background: var(--ok);
+      border-color: var(--ok);
+      color: var(--cream);
+    }
 
-  .iphone-frame:nth-child(2) {
-    display: none;
-  }
-}
+    @media (max-width: 600px) {
+      main {
+        padding: 16px;
+      }
 
-/* Mini devices */
-@media (max-width: 600px) {
-  .iphone-frame {
-    width: 100%;
-    max-width: 390px;
-    height: auto;
-    aspect-ratio: 390 / 844;
-    margin: 0 auto;
-  }
-}
-
-/* Scrollbar */
-.screen::-webkit-scrollbar {
-  width: 6px;
-}
-
-.screen::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.screen::-webkit-scrollbar-thumb {
-  background: var(--soft);
-  border-radius: 3px;
-}
-</style>
+      .drinks-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
 </head>
 <body>
 
-<!-- Loading Screen -->
-<div class="loading-screen" id="loadingScreen">
-  <svg class="loading-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120">
-    <path d="M 15 20 L 15 65 Q 15 75 25 75 L 70 75 Q 80 75 80 65 L 80 20 Z" fill="none" stroke="#FFF6E6" stroke-width="2.5" stroke-linejoin="round"/>
-    <path d="M 80 35 Q 95 35 95 50 Q 95 65 80 65" fill="none" stroke="#FFF6E6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M 30 10 Q 32 5 30 0" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-    <path d="M 50 8 Q 52 3 50 -2" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-    <path d="M 70 10 Q 72 5 70 0" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-  </svg>
-  <div class="loading-text">Loading...</div>
-</div>
+<header>
+  <img src="logo.svg" alt="Oxford Comma logo" onclick="window.location.href='/'">
+  <h1>Order</h1>
+  <div style="width: 40px;"></div>
+</header>
 
-<div class="container">
-  <!-- PHONE 1: CUSTOMER VIEW -->
-  <div class="iphone-frame" id="phone1">
-    <div class="iphone-screen">
-      <header>
-        <button class="logo-btn" onclick="app.switchView('home', 1)">
-          <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120">
-            <path d="M 15 20 L 15 65 Q 15 75 25 75 L 70 75 Q 80 75 80 65 L 80 20 Z" fill="none" stroke="#FFF6E6" stroke-width="2.5" stroke-linejoin="round"/>
-            <path d="M 80 35 Q 95 35 95 50 Q 95 65 80 65" fill="none" stroke="#FFF6E6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M 30 10 Q 32 5 30 0" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-            <path d="M 50 8 Q 52 3 50 -2" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-            <path d="M 70 10 Q 72 5 70 0" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-          </svg>
-        </button>
-        <h1 class="header-title">oxford comma</h1>
-        <button class="loyalty-btn" onclick="app.switchView('loyalty', 1)">♥️ Loyalty</button>
-      </header>
+<main>
+  <h2>Pick a drink</h2>
+  <div class="drinks-grid" id="drinks"></div>
 
-      <nav class="tabs" id="tabs1">
-        <button class="tab active" onclick="app.switchView('home', 1)">Home</button>
-        <button class="tab" onclick="app.switchView('order', 1)">Order</button>
-        <button class="tab" onclick="app.switchView('myorders', 1)">My Orders</button>
-        <button class="tab" onclick="app.switchView('settings', 1)">Settings</button>
-      </nav>
+  <h2>Size</h2>
+  <div class="options-grid" id="sizes"></div>
 
-      <!-- HOME -->
-      <div class="screen-content active" id="view-home-1">
-        <div class="screen">
-          <h2>what are we sipping?</h2>
-          <p style="font-size: 13px; color: var(--soft); margin: 0 0 12px 0;">coffee, matcha & a well-placed pause</p>
-          <button class="btn btn-primary" onclick="app.switchView('order', 1)" style="width: 100%; margin-bottom: 16px;">Start Ordering</button>
+  <h2>Milk</h2>
+  <div class="options-grid" id="milks"></div>
 
-          <div class="card">
-            <p class="card-title">🎉 Next Pop-up</p>
-            <p class="card-desc">Blue booths • Mon 10/5 • 12:30–2pm</p>
-            <button class="btn" style="width: 100%; margin-top: 8px; font-size: 12px;">Add to Calendar</button>
-          </div>
+  <h2>Pickup time</h2>
+  <div class="options-grid" id="times"></div>
 
-          <p style="font-size: 12px; color: var(--soft); margin-top: 16px;">Demo mode: orders are saved in this browser only.</p>
-        </div>
-      </div>
-
-      <!-- ORDER -->
-      <div class="screen-content" id="view-order-1">
-        <div class="screen">
-          <h2>📍 Step 1: Drink</h2>
-          <div id="menu-1"></div>
-
-          <h2>📍 Step 2: Customize</h2>
-          <div class="form-field">
-            <label>Size</label>
-            <div class="chips" id="sizes-1"></div>
-          </div>
-          <div class="form-field">
-            <label>Milk</label>
-            <div class="chips" id="milks-1"></div>
-          </div>
-
-          <h2>📍 Step 3: Pickup Time</h2>
-          <p style="font-size: 12px; color: var(--soft); margin: 0 0 8px 0;">15-min windows, capped at 6 drinks</p>
-          <div class="chips" id="slots-1"></div>
-
-          <h2>📍 Step 4: Contact</h2>
-          <div class="form-field">
-            <label for="name-1">Name for cup *</label>
-            <input type="text" id="name-1" placeholder="Maya" maxlength="30">
-          </div>
-          <div class="form-field">
-            <label for="contact-1">Email or phone *</label>
-            <input type="text" id="contact-1" placeholder="your@email.com or (555) 123-4567">
-          </div>
-          <div class="form-field">
-            <label for="notes-1">Special note (optional)</label>
-            <textarea id="notes-1" placeholder="extra hot, half sweet..." maxlength="120" style="height: 60px;"></textarea>
-          </div>
-
-          <button class="btn btn-primary" onclick="app.submitOrder(1)" style="width: 100%;">Reserve it</button>
-        </div>
-      </div>
-
-      <!-- MY ORDERS -->
-      <div class="screen-content" id="view-myorders-1">
-        <div class="screen">
-          <h2>Your Orders</h2>
-          <div id="orders-list-1"></div>
-        </div>
-      </div>
-
-      <!-- SETTINGS -->
-      <div class="screen-content" id="view-settings-1">
-        <div class="screen">
-          <h2>Settings</h2>
-          <div class="form-field">
-            <label>Email or Phone</label>
-            <input type="text" id="settings-contact-1" placeholder="your@email.com">
-          </div>
-          <button class="btn btn-primary" onclick="app.logout(1)" style="width: 100%;">Logout</button>
-        </div>
-      </div>
-
-      <!-- LOYALTY -->
-      <div class="screen-content" id="view-loyalty-1">
-        <div class="screen">
-          <h2>♥️ Loyalty Card</h2>
-          <div class="card" style="text-align: center; padding: 24px;">
-            <p style="font-size: 28px; margin: 0; font-weight: 800;">8</p>
-            <p class="card-desc">drinks until free</p>
-          </div>
-          <p style="font-size: 12px; color: var(--soft);">Get 1 free drink after every 8 purchases. Stamps added at pickup!</p>
-        </div>
-      </div>
-    </div>
+  <h2>Your info</h2>
+  <div class="form-group">
+    <label class="form-label">Name</label>
+    <input type="text" class="form-input" id="name" placeholder="Your name">
   </div>
 
-  <!-- PHONE 2: STAFF/ADMIN VIEW -->
-  <div class="iphone-frame" id="phone2">
-    <div class="iphone-screen">
-      <header>
-        <button class="logo-btn" onclick="app.switchView('home', 2)">
-          <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120">
-            <path d="M 15 20 L 15 65 Q 15 75 25 75 L 70 75 Q 80 75 80 65 L 80 20 Z" fill="none" stroke="#FFF6E6" stroke-width="2.5" stroke-linejoin="round"/>
-            <path d="M 80 35 Q 95 35 95 50 Q 95 65 80 65" fill="none" stroke="#FFF6E6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M 30 10 Q 32 5 30 0" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-            <path d="M 50 8 Q 52 3 50 -2" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-            <path d="M 70 10 Q 72 5 70 0" fill="none" stroke="#FFF6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-          </svg>
-        </button>
-        <h1 class="header-title">staff</h1>
-        <button class="loyalty-btn" onclick="app.logout(2)" style="font-size: 10px;">Logout</button>
-      </header>
+  <div class="form-group">
+    <label class="form-label">Email or phone</label>
+    <input type="text" class="form-input" id="contact" placeholder="email@example.com or +1234567890">
+  </div>
 
-      <nav class="tabs" id="tabs2">
-        <button class="tab active" onclick="app.switchView('store', 2)">Store</button>
-        <button class="tab" onclick="app.switchView('order-staff', 2)">Order</button>
-        <button class="tab" onclick="app.switchView('settings', 2)">Settings</button>
-      </nav>
+  <button class="submit-btn" onclick="validateAndShowModal()">Place order</button>
 
-      <!-- STORE MODE -->
-      <div class="screen-content active" id="view-store-2">
-        <div class="screen">
-          <h2>Pickup Board</h2>
-          <div class="form-field">
-            <label>
-              <input type="checkbox" id="sound-toggle-2" checked style="width: auto; margin-right: 8px;">
-              🔔 Enable sounds
-            </label>
-          </div>
+  <div class="orders-section">
+    <h2>Your orders</h2>
+    <div id="orders"></div>
+  </div>
+</main>
 
-          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px;">
-            <div class="card" style="text-align: center;">
-              <p style="font-size: 20px; font-weight: 800; margin: 0;">0</p>
-              <p class="card-desc">Reserved</p>
-            </div>
-            <div class="card" style="text-align: center;">
-              <p style="font-size: 20px; font-weight: 800; margin: 0;">0</p>
-              <p class="card-desc">Ready</p>
-            </div>
-          </div>
-
-          <div id="orders-board-2"></div>
-        </div>
-      </div>
-
-      <!-- ORDER FOR YOURSELF -->
-      <div class="screen-content" id="view-order-staff-2">
-        <div class="screen">
-          <h3>Order for Yourself</h3>
-          <h2 style="font-size: 14px;">📍 Step 1: Drink</h2>
-          <div id="menu-2"></div>
-
-          <h2 style="font-size: 14px;">📍 Step 2: Customize</h2>
-          <div class="form-field">
-            <label>Size</label>
-            <div class="chips" id="sizes-2"></div>
-          </div>
-          <div class="form-field">
-            <label>Milk</label>
-            <div class="chips" id="milks-2"></div>
-          </div>
-
-          <h2 style="font-size: 14px;">📍 Step 3: Pickup Time</h2>
-          <div class="chips" id="slots-2"></div>
-
-          <button class="btn btn-primary" onclick="app.submitOrder(2)" style="width: 100%; font-size: 12px;">Reserve for Staff</button>
-        </div>
-      </div>
-
-      <!-- SETTINGS -->
-      <div class="screen-content" id="view-settings-2">
-        <div class="screen">
-          <h2>Staff Settings</h2>
-          <p style="font-size: 12px; color: var(--soft); margin-bottom: 12px;">Staff Mode • Store Access</p>
-          <button class="btn" onclick="app.logout(2)" style="width: 100%;">Logout</button>
-        </div>
-      </div>
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <h2>Confirm order</h2>
+    <div id="orderSummary"></div>
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="closeConfirmModal()">Edit</button>
+      <button class="modal-btn primary" onclick="finalizeOrder()">Confirm</button>
     </div>
   </div>
 </div>
 
 <script>
-const MENU = [
-  { id: 'latte', name: 'Latte', price: 5, desc: 'Double shot, silky steamed milk' },
-  { id: 'cappuccino', name: 'Cappuccino', price: 5, desc: 'Espresso, milk, and a thick cap of foam' },
-  { id: 'flatwhite', name: 'Flat White', price: 5, desc: 'Ristretto shots, thin velvety milk' },
-  { id: 'honey', name: 'Honey Lavender Latte', price: 5, desc: 'House syrup with local honey' },
-  { id: 'matcha', name: 'Matcha Latte', price: 5, desc: 'Ceremonial-grade matcha, whisked to order' },
-  { id: 'coldbrew', name: 'Nitro Cold Brew', price: 4, desc: 'Slow-steeped, poured creamy on tap' }
+const DRINKS = [
+  {id: 'latte', name: 'Latte', price: 4.25},
+  {id: 'cappuccino', name: 'Cappuccino', price: 4.00},
+  {id: 'flatwhite', name: 'Flat white', price: 4.25},
+  {id: 'honeylav', name: 'Honey lavender', price: 5.00},
+  {id: 'matcha', name: 'Matcha latte', price: 5.00},
+  {id: 'coldbrew', name: 'Nitro cold brew', price: 4.00}
 ];
 
-const SIZES = [
-  { id: '12oz', name: '12 oz' },
-  { id: '16oz', name: '16 oz' }
-];
+const SIZES = ['12 oz', '16 oz'];
+const MILKS = ['Whole', '2%', 'Skim', 'Oat', 'Almond', 'No milk'];
+const TIMES = ['12:30pm', '12:45pm', '1:00pm', '1:15pm', '1:30pm', '1:45pm', '2:00pm'];
 
-const MILKS = [
-  { id: 'whole', name: 'Whole' },
-  { id: '2pct', name: '2%' },
-  { id: 'skim', name: 'Skim' },
-  { id: 'oat', name: 'Oat' },
-  { id: 'almond', name: 'Almond' },
-  { id: 'nomilk', name: 'No Milk' }
-];
-
-const POPUP_DATE = '2026-10-05';
-const POPUP_TIME_START = '12:30';
-const POPUP_TIME_END = '14:00';
-
-const app = {
-  state: {
-    1: { user: null, userType: null, selectedDrink: null, selectedSize: null, selectedMilk: null, selectedSlot: null },
-    2: { user: null, userType: 'staff', selectedDrink: null, selectedSize: null, selectedMilk: null, selectedSlot: null }
-  },
-
-  init() {
-    setTimeout(() => {
-      document.getElementById('loadingScreen').classList.add('hidden');
-      this.renderMenus();
-      this.renderSlots();
-      this.switchView('home', 1);
-      this.switchView('store', 2);
-    }, 800);
-  },
-
-  renderMenus() {
-    [1, 2].forEach(phone => {
-      const container = document.getElementById(`menu-${phone}`);
-      container.innerHTML = MENU.map(drink => `
-        <div class="card" style="cursor: pointer; transition: all 0.2s;" onclick="app.selectDrink('${drink.id}', ${phone})">
-          <p class="card-title">${drink.name}</p>
-          <p class="card-desc">${drink.desc}</p>
-          <p style="font-weight: 700; color: var(--butter); margin: 4px 0 0 0;">$${drink.price}.00</p>
-        </div>
-      `).join('');
-    });
-  },
-
-  renderSlots() {
-    const slots = this.generateSlots();
-    [1, 2].forEach(phone => {
-      const container = document.getElementById(`slots-${phone}`);
-      container.innerHTML = slots.map(slot => `
-        <div class="chip-option">
-          <input type="radio" name="slot-${phone}" value="${slot.time}" id="slot-${phone}-${slot.time}">
-          <label class="chip" for="slot-${phone}-${slot.time}">${slot.display} (${slot.count}/6)</label>
-        </div>
-      `).join('');
-
-      document.querySelectorAll(`input[name="slot-${phone}"]`).forEach(input => {
-        input.addEventListener('change', (e) => this.selectSlot(e.target.value, phone));
-      });
-    });
-
-    [1, 2].forEach(phone => {
-      const container = document.getElementById(`sizes-${phone}`);
-      container.innerHTML = SIZES.map(size => `
-        <div class="chip-option">
-          <input type="radio" name="size-${phone}" value="${size.id}" id="size-${phone}-${size.id}">
-          <label class="chip" for="size-${phone}-${size.id}">${size.name}</label>
-        </div>
-      `).join('');
-
-      document.querySelectorAll(`input[name="size-${phone}"]`).forEach(input => {
-        input.addEventListener('change', (e) => this.selectSize(e.target.value, phone));
-      });
-    });
-
-    [1, 2].forEach(phone => {
-      const container = document.getElementById(`milks-${phone}`);
-      container.innerHTML = MILKS.map(milk => `
-        <div class="chip-option">
-          <input type="radio" name="milk-${phone}" value="${milk.id}" id="milk-${phone}-${milk.id}">
-          <label class="chip" for="milk-${phone}-${milk.id}">${milk.name}</label>
-        </div>
-      `).join('');
-
-      document.querySelectorAll(`input[name="milk-${phone}"]`).forEach(input => {
-        input.addEventListener('change', (e) => this.selectMilk(e.target.value, phone));
-      });
-    });
-  },
-
-  generateSlots() {
-    const slots = [];
-    const [startH, startM] = POPUP_TIME_START.split(':').map(Number);
-    const [endH, endM] = POPUP_TIME_END.split(':').map(Number);
-
-    for (let h = startH; h <= endH; h++) {
-      for (let m = 0; m < 60; m += 15) {
-        if (h === endH && m > endM) break;
-        const time = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
-        const display = `${h % 12 || 12}:${String(m).padStart(2, '0')}${h >= 12 ? 'pm' : 'am'}`;
-        slots.push({ time, display, count: 0 });
-      }
-    }
-    return slots;
-  },
-
-  selectDrink(drinkId, phone) {
-    this.state[phone].selectedDrink = drinkId;
-  },
-
-  selectSize(sizeId, phone) {
-    this.state[phone].selectedSize = sizeId;
-  },
-
-  selectMilk(milkId, phone) {
-    this.state[phone].selectedMilk = milkId;
-  },
-
-  selectSlot(time, phone) {
-    this.state[phone].selectedSlot = time;
-  },
-
-  submitOrder(phone) {
-    const state = this.state[phone];
-    const name = document.getElementById(`name-${phone}`)?.value || 'Staff';
-    const contact = document.getElementById(`contact-${phone}`)?.value || 'staff@example.com';
-    const notes = document.getElementById(`notes-${phone}`)?.value || '';
-
-    if (!state.selectedDrink || !state.selectedSize || !state.selectedMilk || !state.selectedSlot) {
-      alert('Please complete all selections');
-      return;
-    }
-
-    const drink = MENU.find(d => d.id === state.selectedDrink);
-    const order = {
-      id: Math.random().toString(36).substr(2, 9),
-      orderNumber: this.generateOrderNumber(),
-      popupDate: POPUP_DATE,
-      drink: drink.name,
-      price: drink.price,
-      size: SIZES.find(s => s.id === state.selectedSize).name,
-      milk: MILKS.find(m => m.id === state.selectedMilk).name,
-      pickupTime: state.selectedSlot,
-      guestName: name,
-      contact: contact,
-      notes: notes,
-      status: 'reserved',
-      createdAt: new Date().toISOString()
-    };
-
-    const orders = JSON.parse(localStorage.getItem('oxford-orders') || '[]');
-    orders.push(order);
-    localStorage.setItem('oxford-orders', JSON.stringify(orders));
-
-    alert(`Order confirmed! #${order.orderNumber}`);
-    this.refreshOrders();
-  },
-
-  generateOrderNumber() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = '';
-    for (let i = 0; i < 4; i++) result += chars.charAt(Math.floor(Math.random() * chars.length));
-    return result;
-  },
-
-  refreshOrders() {
-    const orders = JSON.parse(localStorage.getItem('oxford-orders') || '[]');
-    document.getElementById('orders-list-1').innerHTML = orders.map(o => `
-      <div class="card">
-        <p class="card-title">#${o.orderNumber} • ${o.guestName}</p>
-        <p class="card-desc">${o.size} ${o.drink} • ${o.milk}</p>
-        <p class="card-desc">Pickup: ${o.pickupTime} • Status: ${o.status}</p>
-      </div>
-    `).join('');
-
-    const slotOrders = {};
-    orders.filter(o => o.popupDate === POPUP_DATE && o.status !== 'cancelled').forEach(o => {
-      slotOrders[o.pickupTime] = (slotOrders[o.pickupTime] || 0) + 1;
-    });
-
-    document.getElementById('orders-board-2').innerHTML = Object.entries(slotOrders).map(([time, count]) => `
-      <div class="card">
-        <p class="card-title">${time}</p>
-        <p class="card-desc">${count} order${count !== 1 ? 's' : ''}</p>
-      </div>
-    `).join('');
-  },
-
-  switchView(view, phone) {
-    document.querySelectorAll(`#phone${phone} .screen-content`).forEach(el => el.classList.remove('active'));
-    document.getElementById(`view-${view}-${phone}`)?.classList.add('active');
-
-    document.querySelectorAll(`#tabs${phone} .tab`).forEach(t => t.classList.remove('active'));
-    event?.target?.classList.add('active');
-
-    if (view === 'myorders' || view === 'store') {
-      this.refreshOrders();
-    }
-  },
-
-  logout(phone) {
-    this.state[phone] = { user: null, userType: phone === 2 ? 'staff' : null, selectedDrink: null, selectedSize: null, selectedMilk: null, selectedSlot: null };
-    this.switchView(phone === 1 ? 'home' : 'store', phone);
-  }
+let selected = {
+  drink: null,
+  size: null,
+  milk: null,
+  time: null
 };
 
-app.init();
+function calculatePrice() {
+  if (!selected.drink) return 0;
+  const drink = DRINKS.find(d => d.id === selected.drink);
+  let price = drink.price;
+  if (selected.size === '16 oz') price += 0.75;
+  if (selected.milk === 'Oat' || selected.milk === 'Almond') price += 0.75;
+  return price;
+}
+
+function renderDrinks() {
+  const html = DRINKS.map(d => `
+    <button class="drink-btn ${selected.drink === d.id ? 'selected' : ''}" onclick="selectDrink('${d.id}')">
+      <div class="drink-name">${d.name}</div>
+      <div class="drink-price">$${d.price.toFixed(2)}</div>
+    </button>
+  `).join('');
+  document.getElementById('drinks').innerHTML = html;
+}
+
+function selectDrink(id) {
+  selected.drink = id;
+  renderDrinks();
+}
+
+function renderSizes() {
+  const html = SIZES.map(s => `
+    <button class="option-btn ${selected.size === s ? 'selected' : ''}" onclick="selectSize('${s}')">${s}</button>
+  `).join('');
+  document.getElementById('sizes').innerHTML = html;
+}
+
+function selectSize(s) {
+  selected.size = s;
+  renderSizes();
+}
+
+function renderMilks() {
+  const html = MILKS.map(m => `
+    <button class="option-btn ${selected.milk === m ? 'selected' : ''}" onclick="selectMilk('${m}')">${m}</button>
+  `).join('');
+  document.getElementById('milks').innerHTML = html;
+}
+
+function selectMilk(m) {
+  selected.milk = m;
+  renderMilks();
+}
+
+function renderTimes() {
+  const html = TIMES.map(t => `
+    <button class="option-btn ${selected.time === t ? 'selected' : ''}" onclick="selectTime('${t}')">${t}</button>
+  `).join('');
+  document.getElementById('times').innerHTML = html;
+}
+
+function selectTime(t) {
+  selected.time = t;
+  renderTimes();
+}
+
+function validateAndShowModal() {
+  const name = document.getElementById('name').value.trim();
+  const contact = document.getElementById('contact').value.trim();
+
+  if (!selected.drink || !selected.size || !selected.milk || !selected.time || !name || !contact) {
+    alert('Please fill in all fields');
+    return;
+  }
+
+  const drink = DRINKS.find(d => d.id === selected.drink);
+  const price = calculatePrice();
+  const summary = `${selected.size} ${drink.name} with ${selected.milk}<br>Pickup: ${selected.time}<br>Price: $${price.toFixed(2)}`;
+  document.getElementById('orderSummary').innerHTML = summary;
+  document.getElementById('confirmModal').classList.add('active');
+}
+
+function closeConfirmModal() {
+  document.getElementById('confirmModal').classList.remove('active');
+}
+
+function finalizeOrder() {
+  const name = document.getElementById('name').value.trim();
+  const contact = document.getElementById('contact').value.trim();
+
+  if (!selected.drink || !selected.size || !selected.milk || !selected.time) {
+    alert('Please complete your order');
+    return;
+  }
+
+  const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+  const drink = DRINKS.find(d => d.id === selected.drink);
+
+  const order = {
+    id: Date.now(),
+    number: orders.length + 1,
+    drink: drink.name,
+    size: selected.size,
+    milk: selected.milk,
+    time: selected.time,
+    name: name,
+    contact: contact,
+    status: 'reserved',
+    price: calculatePrice(),
+    createdAt: new Date().toISOString()
+  };
+
+  orders.push(order);
+  localStorage.setItem('orders', JSON.stringify(orders));
+
+  document.getElementById('name').value = '';
+  document.getElementById('contact').value = '';
+  selected = {drink: null, size: null, milk: null, time: null};
+
+  renderDrinks();
+  renderSizes();
+  renderMilks();
+  renderTimes();
+  renderOrders();
+
+  closeConfirmModal();
+  alert('Order placed! Your order number is #' + String(order.number).padStart(3, '0'));
+}
+
+function renderOrders() {
+  const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+  const el = document.getElementById('orders');
+
+  if (orders.length === 0) {
+    el.innerHTML = '<div class="empty-message">No orders yet</div>';
+    return;
+  }
+
+  el.innerHTML = orders.map(o => `
+    <div class="order-card">
+      <p class="order-number">#${String(o.number).padStart(3, '0')}</p>
+      <p class="order-details">
+        ${o.size} ${o.drink} with ${o.milk}<br>
+        Pickup: ${o.time}<br>
+        Name: ${o.name}
+      </p>
+      <span class="order-status">${o.status}</span>
+    </div>
+  `).join('');
+}
+
+renderDrinks();
+renderSizes();
+renderMilks();
+renderTimes();
+renderOrders();
 </script>
 
 </body>

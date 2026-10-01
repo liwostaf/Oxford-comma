@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Oxford Comma - Café Ordering</title>
+  <style>
+    :root {
+      --navy: #1B2540;
+      --cream: #FFF6E6;
+      --white: #FFFFFF;
+      --butter: #FFD66B;
+      --matcha: #A8CC8C;
+      --soft: #5A6078;
+      --ok: #2F6B45;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--navy);
+      color: var(--cream);
+      font-family: "Bricolage Grotesque", system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&display=swap');
+
+    header {
+      background: var(--navy);
+      border-bottom: 2px solid var(--cream);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header img {
+      width: 40px;
+      height: 40px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: lowercase;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      margin: 0 0 16px 0;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 0 0 16px 0;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 28px;
+      background: var(--butter);
+      color: var(--navy);
+      border: none;
+      border-radius: 12px;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      text-transform: lowercase;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .cta-btn:hover {
+      transform: scale(1.02);
+    }
+
+    .cta-btn:active {
+      transform: scale(0.98);
+    }
+
+    section {
+      margin: 60px 0;
+    }
+
+    section h2 {
+      font-size: 24px;
+      font-weight: 800;
+      margin: 0 0 16px 0;
+      color: var(--butter);
+    }
+
+    .mission {
+      background: rgba(255, 246, 230, 0.05);
+      padding: 24px;
+      border-radius: 12px;
+      border-left: 4px solid var(--butter);
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      section h2 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="logo.svg" alt="Oxford Comma logo">
+  <h1>Oxford Comma</h1>
+</header>
+
+<main>
+  <h1>Welcome to Oxford Comma</h1>
+  <p>Your go-to café at Brandeis. Order ahead, skip the line.</p>
+
+  <a href="app.html" class="cta-btn">Order now</a>
+
+  <section class="mission">
+    <h2>Our Mission</h2>
+    <p>We're bringing the café experience to you. Order your favorite drink, grab it when it's ready, and get back to what matters. No lines, no waiting—just great coffee.</p>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <p>Browse our menu of espresso drinks, cold brews, and specialty beverages. Customize your order, choose your pickup time, and we'll have it ready for you.</p>
+  </section>
+
+  <section>
+    <h2>Loyalty</h2>
+    <p>Every drink gets you closer to a free one. Earn 8 stamps, get your next drink on us.</p>
+  </section>
+</main>
+
+</body>
+</html>
