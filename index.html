@@ -1,129 +1,143 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="build" content="2026-10-01T19:35:00Z">
-  <title>The Oxford Comma - Café Ordering</title>
+  <title>THE OXFORD COMMA</title>
   <style>
-    :root {
-      --navy: #1B2540;
-      --cream: #FFF6E6;
-      --white: #FFFFFF;
-      --butter: #FFD66B;
-      --matcha: #A8CC8C;
-      --soft: #5A6078;
-      --ok: #2F6B45;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&display=swap');
 
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
     body {
-      background: var(--navy);
-      color: var(--cream);
+      background: #FFFFFF;
+      color: #1B2540;
       font-family: "Bricolage Grotesque", system-ui, sans-serif;
       font-size: 16px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
-    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&display=swap');
-
     header {
-      background: var(--navy);
-      border-bottom: 2px solid var(--cream);
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      background: #1B2540;
+      color: #FFFFFF;
+      padding: 24px;
+      text-align: center;
+      border-bottom: 3px solid #1B2540;
     }
 
     header img {
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
+      margin-bottom: 12px;
     }
 
     header h1 {
       margin: 0;
-      font-size: 20px;
+      font-size: 28px;
       font-weight: 800;
-      text-transform: lowercase;
+      letter-spacing: 2px;
     }
 
     main {
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: 60px 30px;
     }
 
-    h1 {
-      font-size: 32px;
+    .hero {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
       font-weight: 800;
-      margin: 0 0 16px 0;
+      margin: 0 0 20px 0;
+      letter-spacing: 1px;
     }
 
-    p {
-      font-size: 16px;
-      line-height: 1.6;
-      margin: 0 0 16px 0;
+    .hero p {
+      font-size: 18px;
+      margin: 0 0 40px 0;
+      color: #5A6078;
     }
 
     .cta-btn {
       display: inline-block;
-      padding: 14px 28px;
-      background: var(--butter);
-      color: var(--navy);
+      padding: 16px 40px;
+      background: #1B2540;
+      color: #FFFFFF;
       border: none;
-      border-radius: 12px;
+      border-radius: 4px;
       font-family: inherit;
-      font-weight: 800;
-      font-size: 14px;
+      font-weight: 700;
+      font-size: 16px;
       cursor: pointer;
-      text-transform: lowercase;
       text-decoration: none;
       transition: all 0.2s;
+      letter-spacing: 0.5px;
     }
 
     .cta-btn:hover {
-      transform: scale(1.02);
+      background: #0f1524;
+      transform: translateY(-2px);
     }
 
-    .cta-btn:active {
-      transform: scale(0.98);
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+      margin-top: 80px;
     }
 
-    section {
-      margin: 60px 0;
+    .info-card {
+      padding: 30px 20px;
+      text-align: center;
     }
 
-    section h2 {
-      font-size: 24px;
+    .info-card h3 {
+      font-size: 18px;
       font-weight: 800;
-      margin: 0 0 16px 0;
-      color: var(--butter);
+      margin: 0 0 12px 0;
+      color: #1B2540;
     }
 
-    .mission {
-      background: rgba(255, 246, 230, 0.05);
-      padding: 24px;
-      border-radius: 12px;
-      border-left: 4px solid var(--butter);
+    .info-card p {
+      font-size: 14px;
+      color: #5A6078;
+      margin: 0;
     }
 
-    @media (max-width: 600px) {
+    .footer {
+      text-align: center;
+      margin-top: 100px;
+      padding-top: 40px;
+      border-top: 1px solid #E5E5E5;
+    }
+
+    .footer a {
+      color: #1B2540;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
       main {
-        padding: 20px;
+        padding: 40px 20px;
       }
 
-      h1 {
-        font-size: 24px;
+      .hero h1 {
+        font-size: 36px;
       }
 
-      section h2 {
-        font-size: 18px;
+      .info-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
       }
     }
   </style>
@@ -132,35 +146,34 @@
 
 <header>
   <img src="logo.svg" alt="Oxford Comma logo">
-  <h1>Oxford Comma</h1>
+  <h1>THE OXFORD COMMA</h1>
 </header>
 
 <main>
-  <h1>Welcome to Oxford Comma</h1>
-  <p>Your go-to café at Brandeis. Order ahead, skip the line.</p>
+  <div class="hero">
+    <h1>Café at Brandeis</h1>
+    <p>Order ahead, skip the line</p>
+    <a href="app.html" class="cta-btn">Order Now</a>
+  </div>
 
-  <a href="app.html" class="cta-btn">Order now</a>
+  <div class="info-grid">
+    <div class="info-card">
+      <h3>Mission</h3>
+      <p>Great coffee, fast service. Order what you want, grab it when ready.</p>
+    </div>
+    <div class="info-card">
+      <h3>How It Works</h3>
+      <p>Select your drink, choose your size and milk, pick a pickup time. Done.</p>
+    </div>
+    <div class="info-card">
+      <h3>Loyalty</h3>
+      <p>Every drink gets you a stamp. Eight stamps equals one free drink.</p>
+    </div>
+  </div>
 
-  <section class="mission">
-    <h2>Our Mission</h2>
-    <p>We're bringing the café experience to you. Order your favorite drink, grab it when it's ready, and get back to what matters. No lines, no waiting—just great coffee.</p>
-  </section>
-
-  <section>
-    <h2>How it works</h2>
-    <p>Browse our menu of espresso drinks, cold brews, and specialty beverages. Customize your order, choose your pickup time, and we'll have it ready for you.</p>
-  </section>
-
-  <section>
-    <h2>Loyalty</h2>
-    <p>Every drink gets you closer to a free one. Earn 8 stamps, get your next drink on us.</p>
-  </section>
-
-  <section style="text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid rgba(255, 246, 230, 0.2);">
-    <p style="font-size: 12px; color: var(--soft); margin: 0;">
-      <a href="/admin/" style="color: var(--soft); text-decoration: none;">Staff access</a>
-    </p>
-  </section>
+  <div class="footer">
+    <a href="/admin/">Staff Access</a>
+  </div>
 </main>
 
 </body>
