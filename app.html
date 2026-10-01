@@ -18,7 +18,7 @@
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
     body {
-      background: var(--navy);
+      background: linear-gradient(135deg, #1B2540 0%, #2F3D52 50%, #1B3A52 100%);
       color: var(--cream);
       font-family: "Bricolage Grotesque", system-ui, sans-serif;
       font-size: 16px;
@@ -28,30 +28,39 @@
     @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&display=swap');
 
     header {
-      background: var(--navy);
-      border-bottom: 2px solid var(--cream);
-      padding: 16px;
+      background: linear-gradient(135deg, #1B2540 0%, #2F3D52 100%);
+      border-bottom: 4px solid var(--butter);
+      padding: 20px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
       z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     header img {
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    header img:hover {
+      transform: scale(1.1);
     }
 
     header h1 {
       margin: 0;
-      font-size: 20px;
+      font-size: 24px;
       font-weight: 800;
-      text-transform: lowercase;
       flex: 1;
       text-align: center;
+      background: linear-gradient(135deg, var(--butter) 0%, var(--matcha) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .auth-button {
