@@ -582,7 +582,7 @@ function checkAuth() {
 
   if (userData && userData.name) {
     userStatus.textContent = userData.name;
-    authButton.textContent = 'Log out';
+    authButton.textContent = 'Account';
   } else {
     userStatus.textContent = 'Guest';
     authButton.textContent = 'Log in';
@@ -593,12 +593,7 @@ function handleAuthClick() {
   const userData = JSON.parse(localStorage.getItem('userData') || 'null');
 
   if (userData && userData.name) {
-    const confirmed = confirm('Log out of your account?');
-    if (confirmed) {
-      localStorage.removeItem('userData');
-      localStorage.removeItem('sessionToken');
-      checkAuth();
-    }
+    window.location.href = '/account.html';
   } else {
     window.location.href = '/auth/login.html';
   }
